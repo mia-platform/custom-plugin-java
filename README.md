@@ -1,2 +1,2 @@
 # custom-plugin-java
-Java Custom Plugin
+Library that allows you to define Mia-Platform custom plugins in java easily
