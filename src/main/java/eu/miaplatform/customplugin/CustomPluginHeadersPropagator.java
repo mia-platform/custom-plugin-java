@@ -2,8 +2,8 @@ package eu.miaplatform.customplugin;
 
 import java.util.List;
 
-public interface HeadersPropagator {
+public interface CustomPluginHeadersPropagator {
 
     void add(String headerName, String headerValue);
-    List<CustomPluginHeader> getHeaders ();
+    List<CustomPluginHeader> getHeaders();
 }

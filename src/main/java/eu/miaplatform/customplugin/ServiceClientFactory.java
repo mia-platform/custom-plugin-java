@@ -2,7 +2,7 @@ package eu.miaplatform.customplugin;
 
 public class ServiceClientFactory {
 
-    ServiceClient getCRUDServiceClient(String apiPath, String apiSecret, HeadersPropagator headersPropagator) {
+    static ServiceClient getCRUDServiceClient(String apiPath, String apiSecret, CustomPluginHeadersPropagator headersPropagator) {
         return new CRUDServiceClient(apiPath, apiSecret, headersPropagator);
     }
 }

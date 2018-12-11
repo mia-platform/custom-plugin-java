@@ -42,8 +42,12 @@ public class CRUDServiceClient implements ServiceClient {
         }
     }
 
-    public CRUDServiceClient(String apiPath, String apiSecret, HeadersPropagator headersPropagator) {
+    public CRUDServiceClient(String apiPath, String apiSecret, CustomPluginHeadersPropagator headersPropagator) {
         this(apiPath, apiSecret);
+        this.addAddHeadersInterceptor(headersPropagator);
+    }
+
+    private void addAddHeadersInterceptor(CustomPluginHeadersPropagator headersPropagator) {
 
         List<CustomPluginHeader> headers = headersPropagator.getHeaders();
 
