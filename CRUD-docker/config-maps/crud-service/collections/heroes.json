@@ -1,0 +1,105 @@
+{
+  "name": "heroes",
+  "id": "heroes",
+  "description": "Collection of heroes",
+  "fields": [
+    {
+      "name": "_id",
+      "description": "_id",
+      "type": "ObjectId",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "creatorId",
+      "description": "creatorId",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "createdAt",
+      "description": "createdAt",
+      "type": "Date",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "updaterId",
+      "description": "updaterId",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "updatedAt",
+      "description": "updatedAt",
+      "type": "Date",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "__STATE__",
+      "description": "__STATE__",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "name",
+      "description": "Nome del supereroe",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "description",
+      "description": "inserisci una descrizione dell'eroe",
+      "type": "string",
+      "required": false,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "image",
+      "description": "inserisci un immagine dell'eroe",
+      "type": "Array",
+      "required": false,
+      "crypted": false,
+      "nullable": false,
+      "items": {
+        "type": "RawObject"
+      }
+    },
+    {
+      "name": "power",
+      "description": "inserisci da 1 a 10 la forza dell'eroe",
+      "type": "number",
+      "required": false,
+      "crypted": false,
+      "nullable": false
+    }
+  ],
+  "indexes": [
+    {
+      "name": "_id",
+      "type": "normal",
+      "unique": true,
+      "fields": [
+        {
+          "name": "_id",
+          "order": 1
+        }
+      ]
+    }
+  ],
+  "endpointBasePath": "v2/heroes",
+  "defaultState": "DRAFT"
+}

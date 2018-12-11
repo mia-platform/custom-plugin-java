@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+  mongo:
+    image: "mongo:3.6"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - "mongo:/data/db"
+
+  crud-service:
+    image: nexus.mia-platform.eu/core/crud-service:0.11.0
+    ports:
+      - "8080:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/demo
+      - COLLECTION_DEFINITION_FOLDER=/collections
+      - HTTP_PORT=3000
+      - LOG_LEVEL=trace
+      - USER_ID_HEADER_KEY=userid
+    volumes:
+      - type: bind
+        source: ./config-maps/crud-service/collections
+        target: /collections
+        read_only: true
+    depends_on:
+      - mongo
+
+volumes:
+  mongo:

@@ -1,0 +1,124 @@
+{
+  "name": "author",
+  "id": "author",
+  "description": "Collection of author",
+  "fields": [
+    {
+      "name": "_id",
+      "description": "_id",
+      "type": "ObjectId",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "creatorId",
+      "description": "creatorId",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "createdAt",
+      "description": "createdAt",
+      "type": "Date",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "updaterId",
+      "description": "updaterId",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "updatedAt",
+      "description": "updatedAt",
+      "type": "Date",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "__STATE__",
+      "description": "__STATE__",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "name",
+      "description": "name",
+      "type": "string",
+      "required": true,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "surname",
+      "description": "surname",
+      "type": "string",
+      "required": false,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "languages",
+      "description": "languages",
+      "type": "Array",
+      "required": false,
+      "crypted": false,
+      "nullable": false,
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "age",
+      "description": "age",
+      "type": "number",
+      "required": false,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "topAuthor",
+      "description": "topAuthor",
+      "type": "boolean",
+      "required": false,
+      "crypted": false,
+      "nullable": false
+    },
+    {
+      "name": "news",
+      "description": "news",
+      "type": "Array",
+      "required": false,
+      "crypted": false,
+      "nullable": false,
+      "items": {
+        "type": "string"
+      }
+    }
+  ],
+  "indexes": [
+    {
+      "name": "_id",
+      "type": "normal",
+      "unique": true,
+      "fields": [
+        {
+          "name": "_id",
+          "order": 1
+        }
+      ]
+    }
+  ],
+  "endpointBasePath": "v2/author",
+  "defaultState": "DRAFT"
+}
