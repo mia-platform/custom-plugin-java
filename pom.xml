@@ -202,11 +202,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.0.13</version>
