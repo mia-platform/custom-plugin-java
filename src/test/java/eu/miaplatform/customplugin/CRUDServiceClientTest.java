@@ -23,11 +23,12 @@ public class CRUDServiceClientTest {
      **/
 
     private String apiPath = "http://localhost:8080";
+    private int crudVersion = 2;
 
     private CRUD crud = new CRUD(apiPath);
 
     private CustomPluginHeadersPropagator headersPropagator;
-    private ServiceClient crudClient;
+    private CRUDServiceClient crudClient;
 
     private String collectionName = "author";
     private Author author = new Author("Marco", "Marconi", 10);
@@ -41,11 +42,13 @@ public class CRUDServiceClientTest {
     @Before
     public void prepareData() {
 
+        crud.setVersion(crudVersion);
+
         headersPropagator = new CustomPluginHeadersPropagatorImpl();
         headersPropagator.add("id", "1234");
         headersPropagator.add("token", "5678");
 
-        crudClient = ServiceClientFactory.getCRUDServiceClient(apiPath, null, headersPropagator);
+        crudClient = ServiceClientFactory.getCRUDServiceClient(apiPath, null, crudVersion, headersPropagator);
 
         ArrayList<State> stateList = new ArrayList<>();
         stateList.add(State.Pub);

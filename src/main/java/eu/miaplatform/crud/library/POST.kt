@@ -16,7 +16,7 @@ import java.io.Serializable
 import java.io.UnsupportedEncodingException
 import java.util.ArrayList
 
-class POST(var collection: String, private val network: Network, private val crudVersion: Int) {
+class POST(var collection: String, private val network: Network, private val crudVersion: Int? = null) {
 
     //Async
 
@@ -47,7 +47,7 @@ class POST(var collection: String, private val network: Network, private val cru
     }
 
     fun async(jsonObject: JsonObject, state: State?, callback: SingleObjectCallback<String>){
-        val relativePath = "v$crudVersion/$collection"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection" else collection
 
         val gson = GsonFactory.newGsonInstance()
         if(state != null) {
@@ -84,7 +84,7 @@ class POST(var collection: String, private val network: Network, private val cru
     }
 
     fun async(jsonArray: JsonArray, state: State?, callback: MultipleObjectsCallback<String>){
-        val relativePath = "v$crudVersion/$collection"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection" else collection
 
         val gson = GsonFactory.newGsonInstance()
         try {
@@ -148,7 +148,7 @@ class POST(var collection: String, private val network: Network, private val cru
 
     @Throws
     fun sync(jsonObject: JsonObject, state: State?): String? {
-        val relativePath = "v$crudVersion/$collection"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection" else collection
 
         try {
             val gson = GsonFactory.newGsonInstance()
@@ -192,7 +192,7 @@ class POST(var collection: String, private val network: Network, private val cru
 
     @Throws
     fun sync(jsonArray: JsonArray, state: State?): ArrayList<String>? {
-        val relativePath = "v$crudVersion/$collection"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection" else collection
 
         try {
             val gson = GsonFactory.newGsonInstance()
@@ -234,7 +234,7 @@ class POST(var collection: String, private val network: Network, private val cru
     // Change state
 
     fun asyncChangeState(id: String, state: State, callback: NoObjectCallback){
-        val relativePath = "v$crudVersion/$collection/$id/state"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection/$id/state" else "$collection/$id/state"
 
         val gson = GsonFactory.newGsonInstance()
         val jsonObject = JsonObject()
@@ -258,7 +258,7 @@ class POST(var collection: String, private val network: Network, private val cru
     }
 
     fun syncChangeState(id: String, state: State): CRUDError?{
-        val relativePath = "v$crudVersion/$collection/$id/state"
+        val relativePath = if (crudVersion != null) "v$crudVersion/$collection/$id/state" else "$collection/$id/state"
 
         val gson = GsonFactory.newGsonInstance()
         val jsonObject = JsonObject()

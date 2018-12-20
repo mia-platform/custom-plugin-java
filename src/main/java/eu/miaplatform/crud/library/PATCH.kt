@@ -14,7 +14,7 @@ import java.io.Serializable
 import java.io.UnsupportedEncodingException
 import java.util.*
 
-class PATCH (private val collection: String, private val network: Network, private val crudVersion: Int) {
+class PATCH (private val collection: String, private val network: Network, private val crudVersion: Int? = null) {
 
     private var state: String? = null
 
@@ -27,7 +27,8 @@ class PATCH (private val collection: String, private val network: Network, priva
 
     fun async(id: String, callback: SingleObjectCallback<String>){
         val queryParameters = getQueryParameters()
-        val relativePath = if(queryParameters.isEmpty()) "v$crudVersion/$collection/$id" else "v$crudVersion/$collection/$id?$queryParameters"
+        val partialPath = if (crudVersion != null) "v$crudVersion/$collection/$id" else "$collection/$id"
+        val relativePath = if(queryParameters.isEmpty()) partialPath else "$partialPath?$queryParameters"
 
         val body = buildBody()
 
@@ -60,7 +61,8 @@ class PATCH (private val collection: String, private val network: Network, priva
     @Throws
     fun sync(id: String) : String? {
         val queryParameters = getQueryParameters()
-        val relativePath = if(queryParameters.isEmpty()) "v$crudVersion/$collection/$id" else "v$crudVersion/$collection/$id?$queryParameters"
+        val partialPath = if (crudVersion != null) "v$crudVersion/$collection/$id" else "$collection/$id"
+        val relativePath = if(queryParameters.isEmpty()) partialPath else "$partialPath?$queryParameters"
 
         val body = buildBody()
         val response = network.queryRestInterface.patch(relativePath, body).execute()

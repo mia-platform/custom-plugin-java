@@ -1,9 +1,9 @@
 package eu.miaplatform.crud.library
 
-class CRUD(basePath: String) {
+class CRUD(basePath: String = "https://crud-service") {
 
-    private val crudVersion = 2
     val network: Network = Network(basePath)
+    private var version: Int? = null
 
     /**
      * Builds the GET object with a query builder.
@@ -13,7 +13,8 @@ class CRUD(basePath: String) {
      * @return a GET object to perform the call
      */
     public fun get(collection: String, queryBuilder: QueryBuilder?): GET {
-        return GET(collection, queryBuilder, network, crudVersion)
+        version?.let { return GET(collection, queryBuilder, network, version!!) }
+        return GET(collection, queryBuilder, network)
     }
 
     /**
@@ -24,7 +25,8 @@ class CRUD(basePath: String) {
      * @return a GET object to perform the call
      */
     fun get(collection: String, query: String): GET {
-        return GET(collection, query, network, crudVersion)
+        version?.let { return GET(collection, query, network, version!!) }
+        return GET(collection, query, network)
     }
 
     /**
@@ -34,7 +36,10 @@ class CRUD(basePath: String) {
      * @return a POST object to perform the call
      */
     fun post(collection: String): POST {
-        return POST(collection, network, crudVersion)
+        version?.let {
+            return POST(collection, network, version!!)
+        }
+        return POST(collection, network)
     }
 
     /**
@@ -44,7 +49,10 @@ class CRUD(basePath: String) {
      * @return a DELETE object to perform the call
      */
     fun delete(collection: String): DELETE {
-        return DELETE(collection, network, crudVersion)
+        version?.let {
+            return DELETE(collection, network, version!!)
+        }
+        return DELETE(collection, network)
     }
 
     /**
@@ -55,7 +63,10 @@ class CRUD(basePath: String) {
      * @return a DELETE object to perform the call
      */
     fun delete(collection: String, query: String): DELETE {
-        return DELETE(collection, query, network, crudVersion)
+        version?.let {
+            return DELETE(collection, query, network, version!!)
+        }
+        return DELETE(collection, query, network)
     }
 
     /**
@@ -66,7 +77,10 @@ class CRUD(basePath: String) {
      * @return a DELETE object to perform the call
      */
     fun delete(collection: String, queryBuilder: QueryBuilder): DELETE {
-        return DELETE(collection, queryBuilder, network, crudVersion)
+        version?.let {
+            return DELETE(collection, queryBuilder, network, version!!)
+        }
+        return DELETE(collection, queryBuilder, network)
     }
 
     /**
@@ -76,6 +90,17 @@ class CRUD(basePath: String) {
      * @return a PATCH object to perform the call
      */
     fun patch(collection: String): PATCH {
-        return PATCH(collection, network, crudVersion)
+        version?.let {
+            return PATCH(collection, network, version!!)
+        }
+        return PATCH(collection, network)
+    }
+
+    fun setVersion(version: Int) {
+        this.version = version
+    }
+
+    fun getVersion() : Int? {
+        return this.version
     }
 }

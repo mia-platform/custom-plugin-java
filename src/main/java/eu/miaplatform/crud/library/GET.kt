@@ -13,7 +13,7 @@ import retrofit2.Response
 import java.io.Serializable
 import java.util.*
 
-class GET (private var collection: String, private val network: Network, private val crudVersion: Int) {
+class GET(private var collection: String, private val network: Network, private val crudVersion: Int? = null) {
 
     private var properties: String? = null
     private var query: String? = null
@@ -22,72 +22,71 @@ class GET (private var collection: String, private val network: Network, private
     private var skip: Int? = null
     private var sort: String? = null
 
-    constructor(collection: String, query: String?, network: Network, crudVersion: Int) : this(collection, network, crudVersion) {
-        if(query != null) this.query = query
+    constructor(collection: String, query: String?, network: Network, crudVersion: Int? = null) : this(collection, network, crudVersion) {
+        if (query != null) this.query = query
     }
 
-    constructor(collection: String, queryBuilder: QueryBuilder?, network: Network, crudVersion: Int): this(collection, network, crudVersion) {
-        if(queryBuilder != null) this.query = queryBuilder.build()
+    constructor(collection: String, queryBuilder: QueryBuilder?, network: Network, crudVersion: Int? = null) : this(collection, network, crudVersion) {
+        if (queryBuilder != null) this.query = queryBuilder.build()
     }
-
 
     // Public
 
-    fun limitProperties(items: ArrayList<String>){
+    fun limitProperties(items: ArrayList<String>) {
         this.properties = items.joinToString(separator = ",")
     }
 
-    fun limitProperty(item: String){
+    fun limitProperty(item: String) {
         this.properties = item
     }
 
-    fun state(states: ArrayList<State>){
+    fun state(states: ArrayList<State>) {
         this.state = states.joinToString(separator = ",") { it.value }
     }
 
-    fun state(state: State){
+    fun state(state: State) {
         this.state = state.value
     }
 
-    fun limit(limit: Int){
+    fun limit(limit: Int) {
         this.limit = limit
     }
 
-    fun skip(skip: Int){
+    fun skip(skip: Int) {
         this.skip = skip
     }
 
-    fun sortBy(property: String, descending: Boolean){
-        this.sort = if(descending) "-$property" else property
+    fun sortBy(property: String, descending: Boolean) {
+        this.sort = if (descending) "-$property" else property
     }
 
     // Async
 
-    fun async(callback: SingleObjectCallback<JsonElement>){
+    fun async(callback: SingleObjectCallback<JsonElement>) {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/" else "/$collection/"
         async(relativePath, queryParameters, callback)
     }
 
-    fun async(id: String, callback: SingleObjectCallback<JsonElement>){
+    fun async(id: String, callback: SingleObjectCallback<JsonElement>) {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/$id"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/$id" else "/$collection/$id"
         async(relativePath, queryParameters, callback)
     }
 
-    fun <T: Serializable> async(clazz: Class<T>, callback: MultipleObjectsCallback<T>){
-        async (object: SingleObjectCallback<JsonElement> {
+    fun <T : Serializable> async(clazz: Class<T>, callback: MultipleObjectsCallback<T>) {
+        async(object : SingleObjectCallback<JsonElement> {
             override fun onCompleted(result: JsonElement?, error: CRUDError?) {
                 var callError: CRUDError? = null
                 var objs: ArrayList<T>? = null
-                if(result != null && error == null){
+                if (result != null && error == null) {
                     try {
                         objs = ArrayList()
                         val jsonArray = result.asJsonArray
-                        for (element in jsonArray){
+                        for (element in jsonArray) {
                             objs.add(Gson().fromJson(element, clazz))
                         }
-                    } catch (e: Exception){
+                    } catch (e: Exception) {
                         callback.onCompleted(null, CRUDError(e.message))
                     }
                 } else {
@@ -98,15 +97,15 @@ class GET (private var collection: String, private val network: Network, private
         })
     }
 
-    fun <T: Serializable> async(id: String, clazz: Class<T>, callback: SingleObjectCallback<T>){
-        async (id, object: SingleObjectCallback<JsonElement> {
+    fun <T : Serializable> async(id: String, clazz: Class<T>, callback: SingleObjectCallback<T>) {
+        async(id, object : SingleObjectCallback<JsonElement> {
             override fun onCompleted(result: JsonElement?, error: CRUDError?) {
                 var callError: CRUDError? = null
                 var obj: T? = null
-                if(result != null && error == null){
+                if (result != null && error == null) {
                     try {
                         obj = Gson().fromJson(result, clazz)
-                    } catch (e: Exception){
+                    } catch (e: Exception) {
                         callback.onCompleted(null, CRUDError(e.message))
                     }
 
@@ -123,25 +122,25 @@ class GET (private var collection: String, private val network: Network, private
     @Throws
     fun sync(): JsonElement? {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/" else "/$collection/"
         return sync(relativePath, queryParameters)
     }
 
     @Throws
     fun sync(id: String): JsonElement? {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/$id"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/$id" else "/$collection/$id"
         return sync(relativePath, queryParameters)
     }
 
     @Throws
-    fun <T: Serializable> sync(clazz: Class<T>): ArrayList<T>? {
+    fun <T : Serializable> sync(clazz: Class<T>): ArrayList<T>? {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/" else "/$collection/"
         val jsonElement = sync(relativePath, queryParameters)
         var objs: ArrayList<T>? = null
 
-        if(jsonElement != null) {
+        if (jsonElement != null) {
             objs = ArrayList()
             try {
                 val jsonArray = (jsonElement as JsonArray)
@@ -156,9 +155,9 @@ class GET (private var collection: String, private val network: Network, private
     }
 
     @Throws
-    fun <T: Serializable> sync(id: String, clazz: Class<T>): T? {
+    fun <T : Serializable> sync(id: String, clazz: Class<T>): T? {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/$id"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/$id" else "/$collection/$id"
         val jsonElement = sync(relativePath, queryParameters)
         try {
             return Gson().fromJson(jsonElement, clazz)
@@ -171,7 +170,7 @@ class GET (private var collection: String, private val network: Network, private
 
     fun asyncCount(callback: SingleObjectCallback<Int>?) {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/count"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/count" else "/$collection/count"
 
         network.queryRestInterface.get("$relativePath?$queryParameters").enqueue(object : Callback<JsonElement> {
 
@@ -200,12 +199,12 @@ class GET (private var collection: String, private val network: Network, private
     @Throws
     fun syncCount(): Int? {
         val queryParameters = getQueryParameters()
-        val relativePath = "/v$crudVersion/$collection/count"
+        val relativePath = if (crudVersion != null) "/v$crudVersion/$collection/count" else "/$collection/count"
         val response = network.queryRestInterface.get("$relativePath?$queryParameters").execute()
-        if(response.isSuccessful) {
+        if (response.isSuccessful) {
             try {
                 return response.body()!!.asInt
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 throw e
             }
         } else {
@@ -238,7 +237,7 @@ class GET (private var collection: String, private val network: Network, private
 
     private fun sync(relativePath: String, queryParameters: String): JsonElement? {
         val response = network.queryRestInterface.get("$relativePath?$queryParameters").execute()
-        if(response.isSuccessful) {
+        if (response.isSuccessful) {
             return response.body()
         } else {
             throw CRUDError("Error code ${response.code()}")
@@ -248,27 +247,27 @@ class GET (private var collection: String, private val network: Network, private
     private fun getQueryParameters(): String {
         val queryParameters = HashMap<String, Any>()
 
-        if (query != null){
+        if (query != null) {
             queryParameters[Parameters.QUERY.value] = query!!
         }
 
-        if (properties != null){
+        if (properties != null) {
             queryParameters[Parameters.PROPERTIES.value] = properties!!
         }
 
-        if(state != null){
+        if (state != null) {
             queryParameters[Parameters.STATE.value] = state!!
         }
 
-        if(limit != null){
+        if (limit != null) {
             queryParameters[Parameters.LIMIT.value] = limit!!
         }
 
-        if(skip != null){
+        if (skip != null) {
             queryParameters[Parameters.SKIP.value] = skip!!
         }
 
-        if(sort != null){
+        if (sort != null) {
             queryParameters[Parameters.SORT.value] = sort!!
         }
 
