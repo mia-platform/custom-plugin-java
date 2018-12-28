@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CRUDServiceClientImpl implements CRUDServiceClient {
+final class CRUDServiceClientImpl implements CRUDServiceClient {
 
     private CRUD crud;
     private Logger logger = LoggerFactory.getLogger(CRUDServiceClientImpl.class);

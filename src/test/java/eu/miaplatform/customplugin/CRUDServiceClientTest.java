@@ -44,7 +44,7 @@ public class CRUDServiceClientTest {
 
         crud.setVersion(crudVersion);
 
-        headersPropagator = new CustomPluginHeadersPropagatorImpl();
+        headersPropagator = HeadersPropagatorFactory.getCustomPluginHeadersPropagator();
         headersPropagator.add("id", "1234");
         headersPropagator.add("token", "5678");
 
