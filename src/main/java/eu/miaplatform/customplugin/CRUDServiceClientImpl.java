@@ -21,14 +21,16 @@ final class CRUDServiceClientImpl implements CRUDServiceClient {
     private CRUD crud;
     private Logger logger = LoggerFactory.getLogger(CRUDServiceClientImpl.class);
 
-
-    private CRUDServiceClientImpl(String apiPath, String apiSecret) {
+    CRUDServiceClientImpl(String apiPath, String apiSecret, int version, CustomPluginHeadersPropagator headersPropagator) {
 
         if (apiPath != null) {
             this.crud = new CRUD(apiPath);
         } else {
             this.crud = new CRUD();
         }
+
+        this.crud.setVersion(version);
+
 
         if (apiSecret != null) {
 
@@ -45,16 +47,50 @@ final class CRUDServiceClientImpl implements CRUDServiceClient {
                 return chain.proceed(request);
             });
         }
-    }
 
-    CRUDServiceClientImpl(String apiPath, String apiSecret, CustomPluginHeadersPropagator headersPropagator) {
-        this(apiPath, apiSecret);
         this.addAddHeadersInterceptor(headersPropagator);
     }
 
-    CRUDServiceClientImpl(String apiPath, String apiSecret, int version, CustomPluginHeadersPropagator headersPropagator) {
-        this(apiPath, apiSecret, headersPropagator);
+
+    CRUDServiceClientImpl(String apiPath, int version, CustomPluginHeadersPropagator headersPropagator) {
+
+        if (apiPath != null) {
+            this.crud = new CRUD(apiPath);
+        } else {
+            this.crud = new CRUD();
+        }
+
         this.crud.setVersion(version);
+
+        this.addAddHeadersInterceptor(headersPropagator);
+    }
+
+    CRUDServiceClientImpl(String apiSecret, CustomPluginHeadersPropagator headersPropagator) {
+
+        this.crud = new CRUD();
+
+        if (apiSecret != null) {
+
+            this.crud.getNetwork().addInterceptor(chain -> {
+
+                Request request = chain.request();
+
+                if (!request.headers().names().contains("secret")) {
+                    request = request.newBuilder().
+                            addHeader("secret", apiSecret).
+                            build();
+                }
+
+                return chain.proceed(request);
+            });
+        }
+
+        this.addAddHeadersInterceptor(headersPropagator);
+    }
+
+    CRUDServiceClientImpl(CustomPluginHeadersPropagator headersPropagator) {
+        this.crud = new CRUD();
+        this.addAddHeadersInterceptor(headersPropagator);
     }
 
     private void addAddHeadersInterceptor(CustomPluginHeadersPropagator headersPropagator) {

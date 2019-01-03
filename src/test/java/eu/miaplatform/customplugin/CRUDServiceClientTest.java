@@ -48,7 +48,7 @@ public class CRUDServiceClientTest {
         headersPropagator.add("id", "1234");
         headersPropagator.add("token", "5678");
 
-        crudClient = ServiceClientFactory.getCRUDServiceClient(apiPath, null, crudVersion, headersPropagator);
+        crudClient = ServiceClientFactory.getCRUDServiceClient(apiPath, crudVersion, headersPropagator);
 
         ArrayList<State> stateList = new ArrayList<>();
         stateList.add(State.Pub);
