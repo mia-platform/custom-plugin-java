@@ -7,7 +7,7 @@
     <groupId>eu.mia-platform</groupId>
     <artifactId>custom-plugin-java</artifactId>
     <version>0.0.1</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>Custom Plugin Java Library</name>
     <description>Library that allows you to define Mia-Platform custom plugins in java easily</description>
