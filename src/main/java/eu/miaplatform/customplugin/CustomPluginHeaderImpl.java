@@ -1,6 +1,6 @@
 package eu.miaplatform.customplugin;
 
-public class CustomPluginHeaderImpl implements CustomPluginHeader {
+final class CustomPluginHeaderImpl implements CustomPluginHeader {
 
     private String name;
     private String value;

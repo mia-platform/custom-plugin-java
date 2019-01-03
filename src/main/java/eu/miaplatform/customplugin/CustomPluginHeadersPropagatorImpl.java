@@ -3,7 +3,7 @@ package eu.miaplatform.customplugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomPluginHeadersPropagatorImpl implements CustomPluginHeadersPropagator {
+final class CustomPluginHeadersPropagatorImpl implements CustomPluginHeadersPropagator {
 
     private List<CustomPluginHeader> customPluginHeaders = new ArrayList<>();
 
