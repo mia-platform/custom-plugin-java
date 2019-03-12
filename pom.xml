@@ -6,8 +6,8 @@
 
     <groupId>eu.mia-platform</groupId>
     <artifactId>custom-plugin-java</artifactId>
-    <version>0.0.2</version>
-    <packaging>pom</packaging>
+    <version>0.0.4</version>
+    <packaging>jar</packaging>
 
     <name>Custom Plugin Java Library</name>
     <description>Library that allows you to define Mia-Platform custom plugins in java easily</description>
@@ -183,7 +183,7 @@
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>
-            <version>2.0.2</version>
+            <version>2.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
