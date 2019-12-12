@@ -1,6 +1,6 @@
 package eu.miaplatform.crud.library
 
-class CRUD(basePath: String = "https://crud-service") {
+class CRUD(basePath: String = "http://crud-service") {
 
     val network: Network = Network(basePath)
     private var version: Int? = null
