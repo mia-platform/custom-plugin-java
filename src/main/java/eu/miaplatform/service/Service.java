@@ -13,7 +13,7 @@ public class Service {
     private InitServiceOptions options;
 
     private OkHttpClient client = new OkHttpClient.Builder()
-            .connectionSpecs(Arrays.asList(ConnectionSpec.MODERN_TLS, ConnectionSpec.COMPATIBLE_TLS))
+            .connectionSpecs(Arrays.asList(ConnectionSpec.MODERN_TLS, ConnectionSpec.COMPATIBLE_TLS, ConnectionSpec.CLEARTEXT))
             .build();
 
     public Service(String serviceName, JsonObject requestMiaHeaders, InitServiceOptions options) {
@@ -23,7 +23,7 @@ public class Service {
     }
 
     public Headers parseHeaders() {
-        Headers headers = null;
+        Headers headers = new Headers.Builder().build();
         Set<Map.Entry<String, JsonElement>> entries = requestMiaHeaders.entrySet();
         for (Map.Entry<String, JsonElement> entry : entries) {
             headers = new Headers.Builder().add(entry.getKey(), String.valueOf(entry.getValue())).build();
@@ -32,10 +32,17 @@ public class Service {
     }
 
     public Response get(String path, String queryString, ServiceOptions options) throws IOException {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme(options.getProtocol().toString())
+                .host(serviceName)
+                .port(options.getPort())
+                .addPathSegments(path)
+                .query(queryString)
+                .build();
 
         Request request = new Request.Builder()
-                .header("Authorization", "your token")
-                .url(path)
+                .headers(parseHeaders())
+                .url(url)
                 .build();
 
         return client.newCall(request).execute();

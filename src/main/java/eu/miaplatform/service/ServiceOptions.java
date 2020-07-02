@@ -7,6 +7,13 @@ public class ServiceOptions extends InitServiceOptions {
     private int[] allowedStatusCodes;
     private boolean isMiaHeaderInjected;
 
+    public ServiceOptions() {
+        super(3000, Protocol.HTTP, new JsonObject(), "");
+        this.returnAs = ReturnAs.JSON;
+        this.allowedStatusCodes = new int[] {200};
+        this.isMiaHeaderInjected = true;
+    }
+
     public ServiceOptions(int port, Protocol protocol, JsonObject header, String prefix) {
         super(port, protocol, header, prefix);
     }
