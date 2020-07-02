@@ -10,7 +10,7 @@ public class ServiceOptions extends InitServiceOptions {
     public ServiceOptions() {
         super(3000, Protocol.HTTP, new JsonObject(), "");
         this.returnAs = ReturnAs.JSON;
-        this.allowedStatusCodes = new int[] {200};
+        this.allowedStatusCodes = new int[]{200, 201, 202};
         this.isMiaHeaderInjected = true;
     }
 
