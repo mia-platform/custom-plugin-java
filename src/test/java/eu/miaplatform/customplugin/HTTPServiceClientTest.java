@@ -130,5 +130,4 @@ public class HTTPServiceClientTest {
         verify(deleteRequestedFor(urlPathEqualTo(url))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
-
 }
