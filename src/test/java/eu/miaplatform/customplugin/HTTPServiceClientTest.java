@@ -2,44 +2,32 @@ package eu.miaplatform.customplugin;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import eu.miaplatform.service.*;
 import okhttp3.Headers;
 import okhttp3.Response;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
+import org.mockito.Mock;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HTTPServiceClientTest {
+    @Mock
+    InitServiceOptions initServiceOptions;
+
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(3000);
 
-    @Test
-    public void testGet() throws IOException {
-        String url = "/test?foo=bar";
-        String responseBody = "{\"result\":\"ok\"}";
-        stubFor(WireMock.get(urlEqualTo(url))
-                .withQueryParam("foo", WireMock.equalTo("bar"))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withBody(responseBody)));
+    private Service service;
+    private final String url = "/test";
 
-        JsonObject obj = new JsonObject();
-        Service service = new Service("localhost", obj, new InitServiceOptions(3000, Protocol.HTTP, obj, ""));
-        Response response = service.get("test", "foo=bar", new ServiceOptions());
-
-        assertEquals(response.code(), 200);
-        assertNotNull(response.body());
-        assertEquals(response.body().string(), responseBody);
-        verify(getRequestedFor(urlEqualTo(url))
-                .withQueryParam("foo", WireMock.equalTo("bar")));
+    @Before
+    public void setup() {
+        service = new Service("localhost", new JsonObject(), initServiceOptions);
     }
 
     @Test
@@ -52,22 +40,95 @@ public class HTTPServiceClientTest {
     }
 
     @Test
-    public void get() throws IOException {
-        JsonObject obj = new JsonObject();
-        Service service = new Service("localhost", obj, new InitServiceOptions(3000, Protocol.HTTP, obj, ""));
-        Response response = service.get("users", "foo=bar", new ServiceOptions());
-        System.out.println(response.body().string());
+    public void testGet() throws IOException {
+        String responseBody = "{\"result\":\"ok\"}";
+        stubFor(WireMock.get(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(responseBody)));
+
+        Response response = service.get("test", "id=1", new ServiceOptions());
+
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), responseBody);
+        verify(getRequestedFor(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
-    public void post() throws IOException {
-        JsonObject obj = new JsonObject();
-        JsonObject body = new JsonObject();
-        body.add("firstname", new Gson().toJsonTree("bar"));
+    public void testPost() throws IOException {
+        String requestBody = "{\"foo\":\"bar\"}";
+        stubFor(WireMock.post(urlPathEqualTo(url))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(requestBody)));
 
-        Service service = new Service("localhost", obj, new InitServiceOptions(3000, Protocol.HTTP, obj, ""));
-        Response response = service.post("users", body, "foo=bar", new ServiceOptions());
+        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
+        Response response = service.post("test", body, "", new ServiceOptions());
 
-        System.out.println(response.body().string());
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), requestBody);
+        verify(postRequestedFor(urlPathEqualTo(url)));
     }
+
+    @Test
+    public void testPut() throws IOException {
+        String requestBody = "{\"foo\":\"bar\"}";
+        stubFor(WireMock.put(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(requestBody)));
+
+        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
+        Response response = service.put("test", body, "id=1", new ServiceOptions());
+
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), requestBody);
+        verify(putRequestedFor(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1")));
+    }
+
+    @Test
+    public void testPatch() throws IOException {
+        String requestBody = "{\"$set\":{\"count\":42}}";
+        stubFor(WireMock.patch(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(requestBody)));
+
+        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
+        Response response = service.patch("test", body, "id=1", new ServiceOptions());
+
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), requestBody);
+        verify(patchRequestedFor(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1")));
+    }
+
+    @Test
+    public void testDelete() throws IOException {
+        String responseBody = "{\"result\":\"ok\"}";
+
+        stubFor(WireMock.delete(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(responseBody)));
+
+        Response response = service.delete("test", new JsonObject(), "id=1", new ServiceOptions());
+
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), responseBody);
+        verify(deleteRequestedFor(urlPathEqualTo(url))
+                .withQueryParam("id", WireMock.equalTo("1")));
+    }
+
 }
