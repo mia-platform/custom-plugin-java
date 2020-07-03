@@ -26,7 +26,7 @@ public class ServiceClientFactory {
         return new Service(serviceName, requestMiaHeaders, options);
     }
 
-/*    public static Service getServiceProxy(String microserviceGatewayServiceName, InitServiceOptions options) {
-
-    }*/
+    //public static Service getServiceProxy(String microserviceGatewayServiceName, InitServiceOptions options) {
+        //return new Service(microserviceGatewayServiceName, , options);
+    //}
 }

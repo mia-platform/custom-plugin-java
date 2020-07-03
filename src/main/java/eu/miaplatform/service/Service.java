@@ -31,20 +31,66 @@ public class Service {
         return headers;
     }
 
-    public Response get(String path, String queryString, ServiceOptions options) throws IOException {
-        HttpUrl url = new HttpUrl.Builder()
+    private HttpUrl buildUrl(String path, String queryString, ServiceOptions options) {
+        return new HttpUrl.Builder()
                 .scheme(options.getProtocol().toString())
                 .host(serviceName)
                 .port(options.getPort())
                 .addPathSegments(path)
                 .query(queryString)
                 .build();
+    }
 
+    public Response get(String path, String queryString, ServiceOptions options) throws IOException {
+        HttpUrl url = buildUrl(path, queryString, options);
         Request request = new Request.Builder()
                 .headers(parseHeaders())
                 .url(url)
                 .build();
+        return client.newCall(request).execute();
+    }
 
+    public Response post(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        HttpUrl url = buildUrl(path, queryString, options);
+        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        Request request =  new Request.Builder()
+                .url(url)
+                .post(reqBody)
+                .build();
+        return client.newCall(request).execute();
+    }
+
+    public Response put(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        HttpUrl url = buildUrl(path, queryString, options);
+        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        Request request =  new Request.Builder()
+                .url(url)
+                .put(reqBody)
+                .build();
+        return client.newCall(request).execute();
+    }
+
+    public Response patch(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        HttpUrl url = buildUrl(path, queryString, options);
+        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        Request request =  new Request.Builder()
+                .url(url)
+                .patch(reqBody)
+                .build();
+        return client.newCall(request).execute();
+    }
+
+    public Response delete(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        HttpUrl url = buildUrl(path, queryString, options);
+        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        Request request =  new Request.Builder()
+                .url(url)
+                .delete(reqBody)
+                .build();
         return client.newCall(request).execute();
     }
 }

@@ -24,9 +24,19 @@ public class HTTPServiceClientTest {
     @Test
     public void get() throws IOException {
         JsonObject obj = new JsonObject();
-
         Service service = new Service("localhost", obj, new InitServiceOptions(3000, Protocol.HTTP, obj, ""));
         Response response = service.get("users", "foo=bar", new ServiceOptions());
+        System.out.println(response.body().string());
+    }
+
+    @Test
+    public void post() throws IOException {
+        JsonObject obj = new JsonObject();
+        JsonObject body = new JsonObject();
+        body.add("firstname", new Gson().toJsonTree("bar"));
+
+        Service service = new Service("localhost", obj, new InitServiceOptions(3000, Protocol.HTTP, obj, ""));
+        Response response = service.post("users", body, "foo=bar", new ServiceOptions());
 
         System.out.println(response.body().string());
     }
