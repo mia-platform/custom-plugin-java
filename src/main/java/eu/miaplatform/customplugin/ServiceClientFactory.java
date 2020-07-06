@@ -22,11 +22,7 @@ public class ServiceClientFactory {
         return new CRUDServiceClientImpl(apiPath, apiSecret, version, headersPropagator);
     }
 
-    public static Service getDirectServiceProxy(String serviceName, JsonObject requestMiaHeaders, InitServiceOptions options) {
+    public static Service getServiceProxy(String serviceName, JsonObject requestMiaHeaders, InitServiceOptions options) {
         return new Service(serviceName, requestMiaHeaders, options);
     }
-
-    //public static Service getServiceProxy(String microserviceGatewayServiceName, InitServiceOptions options) {
-        //return new Service(microserviceGatewayServiceName, , options);
-    //}
 }
