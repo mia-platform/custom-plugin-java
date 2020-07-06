@@ -1,7 +1,7 @@
 # custom-plugin-java
 Library that allows you to define Mia-Platform custom plugins in java easily
 
-## Purpouse
+## Purpose
 
 This plugin aims to provide an easy way to integrate the Platform.
 
@@ -15,14 +15,21 @@ This plugin is framework-independent. Every functionality is built using plain J
 ## Usage
 To get a service proxy you can use the following method from class `ServiceCilentFactory`:
 ### getServiceProxy
-``` java
-Service serviceClient = ServiceClientFactory.getServiceProxy('my/api/path', , cpRequest.getHeadersPropagator());
-const myServiceProxy = getDirectServiceProxy(MY_SERVICE_NAME)
- ```
-all the options accepted by the getDirectServiceProxy can be passed (es: `{ port: CUSTOM_PORT }`).
+Before getting your service proxy, you need to inject the appropriate InitServiceOptions instance:
 
-### getServiceProxy
-It need the MICROSERVICE_GATEWAY_SERVICE_NAME so you need to pass it like this:
-``` javascript
-const { getServiceProxy } = require('@mia-platform/custom-plugin-lib')
-const myServiceProxy = getServiceProxy(MICROSERVICE_GATEWAY_SERVICE_NAME)
+- Default InitServiceOptions (port: 3000, protocol: HTTP)
+    ``` java
+    InitServiceOptions initOptions = new InitServiceOptions();
+    Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
+    ```
+- Custom InitServiceOptions you can set your custom headers (including Mia Platform headers) through the constructor `headers` parameters:
+    ``` java
+    Map<String, String> headers = ... // headers
+    InitServiceOptions initOptions = new InitServiceOptions(3000, Protocol.HTTPS, headers, "");
+    Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
+    ``` 
+- Use microservice gateway as service name (like getServiceProxy in custom-plugin-lib)
+     ``` java
+    InitServiceOptions initOptions = new InitServiceOptions();
+    Service serviceClient = ServiceClientFactory.getServiceProxy(MICROSERVICE_GATEWAY_SERVICE_NAME, initOptions);
+    ``` 
