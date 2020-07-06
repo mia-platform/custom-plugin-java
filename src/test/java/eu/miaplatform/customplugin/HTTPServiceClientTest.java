@@ -37,7 +37,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", "id=1", new ServiceOptions());
+        Response response = service.get("test", "id=1");
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
