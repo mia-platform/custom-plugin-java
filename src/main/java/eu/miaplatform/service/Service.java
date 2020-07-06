@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class Service {
-    public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
+    private static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
+    private static final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
     private String serviceName;
     private JsonObject requestMiaHeaders;
     private InitServiceOptions options;
@@ -52,7 +53,6 @@ public class Service {
     }
 
     public Response post(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
-        final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body.toString());
         Request request =  new Request.Builder()
@@ -63,7 +63,6 @@ public class Service {
     }
 
     public Response put(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
-        final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body.toString());
         Request request =  new Request.Builder()
@@ -74,7 +73,6 @@ public class Service {
     }
 
     public Response patch(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
-        final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body.toString());
         Request request =  new Request.Builder()
@@ -85,7 +83,6 @@ public class Service {
     }
 
     public Response delete(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
-        final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body.toString());
         Request request =  new Request.Builder()
