@@ -27,16 +27,7 @@ public class HTTPServiceClientTest {
 
     @Before
     public void setup() {
-        service = new Service("localhost", new JsonObject(), initServiceOptions);
-    }
-
-    @Test
-    public void parseHeaders() {
-        JsonObject obj = new JsonObject();
-        obj.add("foo", new Gson().toJsonTree("bar"));
-        Service service = new Service("foo", obj, new InitServiceOptions(123, Protocol.HTTP, obj, ""));
-        Headers headers = service.parseHeaders();
-        assertEquals(headers.toString(), "foo: \"bar\"\n");
+        service = new Service("localhost", new Headers.Builder().build(), initServiceOptions);
     }
 
     @Test

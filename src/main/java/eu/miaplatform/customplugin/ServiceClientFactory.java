@@ -3,6 +3,9 @@ package eu.miaplatform.customplugin;
 import com.google.gson.JsonObject;
 import eu.miaplatform.service.InitServiceOptions;
 import eu.miaplatform.service.Service;
+import okhttp3.Headers;
+
+import java.util.Map;
 
 public class ServiceClientFactory {
 
@@ -22,7 +25,11 @@ public class ServiceClientFactory {
         return new CRUDServiceClientImpl(apiPath, apiSecret, version, headersPropagator);
     }
 
-    public static Service getServiceProxy(String serviceName, JsonObject requestMiaHeaders, InitServiceOptions options) {
-        return new Service(serviceName, requestMiaHeaders, options);
+    public static Service getServiceProxy(String serviceName, InitServiceOptions options) {
+        return new Service(serviceName, new Headers.Builder().build(), options);
+    }
+
+    public static Service getServiceProxyWithHeaders(String serviceName, InitServiceOptions options, Map<String, String> requestMiaHeaders) {
+        return new Service(serviceName, Headers.of(requestMiaHeaders), options);
     }
 }
