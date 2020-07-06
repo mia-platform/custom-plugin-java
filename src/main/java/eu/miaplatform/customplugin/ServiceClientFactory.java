@@ -26,10 +26,7 @@ public class ServiceClientFactory {
     }
 
     public static Service getServiceProxy(String serviceName, InitServiceOptions options) {
-        return new Service(serviceName, new Headers.Builder().build(), options);
+        return new Service(serviceName, options);
     }
 
-    public static Service getServiceProxyWithHeaders(String serviceName, InitServiceOptions options, Map<String, String> requestMiaHeaders) {
-        return new Service(serviceName, Headers.of(requestMiaHeaders), options);
-    }
 }

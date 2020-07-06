@@ -1,6 +1,6 @@
 package eu.miaplatform.service;
 
-import com.google.gson.JsonObject;
+import java.util.Map;
 
 public class ServiceOptions extends InitServiceOptions {
     private ReturnAs returnAs;
@@ -8,17 +8,17 @@ public class ServiceOptions extends InitServiceOptions {
     private boolean isMiaHeaderInjected;
 
     public ServiceOptions() {
-        super(3000, Protocol.HTTP, new JsonObject(), "");
+        super();
         this.returnAs = ReturnAs.JSON;
         this.allowedStatusCodes = new int[]{200, 201, 202};
         this.isMiaHeaderInjected = true;
     }
 
-    public ServiceOptions(int port, Protocol protocol, JsonObject header, String prefix) {
+    public ServiceOptions(int port, Protocol protocol, Map<String, String> header, String prefix) {
         super(port, protocol, header, prefix);
     }
 
-    public ServiceOptions(int port, Protocol protocol, JsonObject header, String prefix, ReturnAs returnAs, int[] allowedStatusCodes, boolean isMiaHeaderInjected) {
+    public ServiceOptions(int port, Protocol protocol, Map<String, String> header, String prefix, ReturnAs returnAs, int[] allowedStatusCodes, boolean isMiaHeaderInjected) {
         super(port, protocol, header, prefix);
         this.returnAs = returnAs;
         this.allowedStatusCodes = allowedStatusCodes;

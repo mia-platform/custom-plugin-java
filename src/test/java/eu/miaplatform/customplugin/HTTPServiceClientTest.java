@@ -2,12 +2,11 @@ package eu.miaplatform.customplugin;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import eu.miaplatform.service.*;
-import okhttp3.Headers;
 import okhttp3.Response;
 import org.junit.*;
-import org.mockito.Mock;
 
 import java.io.IOException;
 
@@ -16,8 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HTTPServiceClientTest {
-    @Mock
-    InitServiceOptions initServiceOptions;
+
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(3000);
@@ -27,7 +25,7 @@ public class HTTPServiceClientTest {
 
     @Before
     public void setup() {
-        service = new Service("localhost", new Headers.Builder().build(), initServiceOptions);
+        service = new Service("localhost", new InitServiceOptions());
     }
 
     @Test
