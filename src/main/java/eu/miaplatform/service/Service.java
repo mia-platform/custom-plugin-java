@@ -11,7 +11,6 @@ public class Service {
     private static final MediaType JSON = MediaType.parse(APPLICATION_JSON_CHARSET_UTF_8);
     private String serviceName;
     private Headers headers;
-    private InitServiceOptions options;
 
     private OkHttpClient client = new OkHttpClient.Builder()
             .connectionSpecs(Arrays.asList(ConnectionSpec.MODERN_TLS, ConnectionSpec.COMPATIBLE_TLS, ConnectionSpec.CLEARTEXT))
@@ -20,7 +19,6 @@ public class Service {
     public Service(String serviceName, InitServiceOptions options) {
         this.serviceName = serviceName;
         this.headers = Headers.of(options.getHeaders());
-        this.options = options;
     }
 
     private HttpUrl buildUrl(String path, String queryString, ServiceOptions options) {
