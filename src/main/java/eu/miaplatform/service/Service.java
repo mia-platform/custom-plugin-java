@@ -25,9 +25,9 @@ public class Service {
 
     private HttpUrl buildUrl(String path, String queryString, ServiceOptions options) {
         return new HttpUrl.Builder()
-                .scheme(this.options.getProtocol().toString())
+                .scheme(options.getProtocol().toString())
                 .host(this.serviceName)
-                .port(this.options.getPort())
+                .port(options.getPort())
                 .addPathSegments(path)
                 .query(queryString)
                 .build();
