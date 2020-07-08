@@ -8,16 +8,13 @@ import java.util.Map;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class InitServiceOptions {
-    private int port;
-    private Protocol protocol;
-    private Map<String, String> headers;
+    @Builder.Default
+    private int port = 3000;
+    @Builder.Default
+    private Protocol protocol = Protocol.HTTP;
+    @Builder.Default
+    private Map<String, String> headers = new HashMap<>();
     private String prefix;
-
-    public InitServiceOptions() {
-        this.port = 3000;
-        this.protocol = Protocol.HTTP;
-        this.headers = new HashMap<>();
-        this.prefix = "";
-    }
 }

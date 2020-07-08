@@ -13,22 +13,29 @@ The underlying library which enables the possibility to operate with external se
 This plugin is framework-independent. Every functionality is built using plain Java code. 
 
 ## Usage
-To get a service proxy you can use the following method from class `ServiceClientFactory`:
-### getServiceProxy
+### Service proxy
+#### Service options
 Before getting your service proxy, you need to inject the appropriate `InitServiceOptions` instance:
-
-- Default `InitServiceOptions` (port: 3000, protocol: HTTP)
++ Default `InitServiceOptions` (port: 3000, protocol: HTTP)
     ``` java
     InitServiceOptions initOptions = new InitServiceOptions();
-    Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
     ```
-- Custom `InitServiceOptions`: for example, you can set custom headers (including Mia Platform headers) through the constructor's `headers` parameter:
++ Custom `InitServiceOptions`: you can build an instance with `InitServiceOptions.builder()`. For example, you can set custom headers (including Mia Platform headers):
     ``` java
-    Map<String, String> headers = ... // headers
-    InitServiceOptions initOptions = new InitServiceOptions(3000, Protocol.HTTPS, headers, "");
-    Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
+    Map<String, String> customHeaders = ... // headers
+    InitServiceOptions initOptions = InitServiceOptions.builder().headers(customHeaders).build();
     ``` 
-- Use microservice gateway as service name (like `getServiceProxy` in [custom-plugin-lib](https://github.com/mia-platform/custom-plugin-lib))
+  
+#### Getting a proxy
+To get a service proxy, you can use the following methods from class `ServiceClientFactory`:
+
++ `getDirectServiceProxy`
+    ``` java
+    Service serviceClient = ServiceClientFactory.getDirectServiceProxy("my-microservice", initOptions);
+    ``` 
+
++ `getServiceProxy`
+    Uses microservice gateway:
      ``` java
-    Service serviceClient = ServiceClientFactory.getServiceProxy(MICROSERVICE_GATEWAY_SERVICE_NAME, initOptions);
+    Service serviceClient = ServiceClientFactory.getServiceProxy(initOptions);
     ``` 
