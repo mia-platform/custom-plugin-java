@@ -17,19 +17,18 @@ To get a service proxy you can use the following method from class `ServiceCilen
 ### getServiceProxy
 Before getting your service proxy, you need to inject the appropriate InitServiceOptions instance:
 
-- Default InitServiceOptions (port: 3000, protocol: HTTP)
+- Default `InitServiceOptions` (port: 3000, protocol: HTTP)
     ``` java
     InitServiceOptions initOptions = new InitServiceOptions();
     Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
     ```
-- Custom InitServiceOptions you can set your custom headers (including Mia Platform headers) through the constructor `headers` parameters:
+- Custom `InitServiceOptions`: for example, you can set custom headers (including Mia Platform headers) through the constructor's `headers` parameter:
     ``` java
     Map<String, String> headers = ... // headers
     InitServiceOptions initOptions = new InitServiceOptions(3000, Protocol.HTTPS, headers, "");
     Service serviceClient = ServiceClientFactory.getServiceProxy("my-microservice", initOptions);
     ``` 
-- Use microservice gateway as service name (like getServiceProxy in custom-plugin-lib)
+- Use microservice gateway as service name (like `getServiceProxy` in [custom-plugin-lib](https://github.com/mia-platform/custom-plugin-lib))
      ``` java
-    InitServiceOptions initOptions = new InitServiceOptions();
     Service serviceClient = ServiceClientFactory.getServiceProxy(MICROSERVICE_GATEWAY_SERVICE_NAME, initOptions);
     ``` 
