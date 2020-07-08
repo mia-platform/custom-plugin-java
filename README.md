@@ -29,13 +29,12 @@ Before getting your service proxy, you need to inject the appropriate `InitServi
 #### Getting a proxy
 To get a service proxy, you can use the following methods from class `ServiceClientFactory`:
 
-+ `getDirectServiceProxy`
++ `getDirectServiceProxy`, to directly communicate with a specific microservice
     ``` java
     Service serviceClient = ServiceClientFactory.getDirectServiceProxy("my-microservice", initOptions);
     ``` 
 
-+ `getServiceProxy`
-    Uses microservice gateway:
++ `getServiceProxy`, to use microservice gateway:
      ``` java
     Service serviceClient = ServiceClientFactory.getServiceProxy(initOptions);
     ``` 
