@@ -52,9 +52,9 @@ public class Service {
     }
 
 
-    public Response post(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+    public Response post(String path, String body, String queryString, ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -63,9 +63,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response post(String path, JsonObject body, String queryString) throws IOException {
+    public Response post(String path, String body, String queryString) throws IOException {
         HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -74,9 +74,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response put(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+    public Response put(String path, String body, String queryString, ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -85,9 +85,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response put(String path, JsonObject body, String queryString) throws IOException {
+    public Response put(String path, String body, String queryString) throws IOException {
         HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -96,9 +96,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response patch(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+    public Response patch(String path, String body, String queryString, ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -107,9 +107,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response patch(String path, JsonObject body, String queryString) throws IOException {
+    public Response patch(String path, String body, String queryString) throws IOException {
         HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -118,9 +118,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response delete(String path, JsonObject body, String queryString, ServiceOptions options) throws IOException {
+    public Response delete(String path, String body, String queryString, ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)
@@ -129,9 +129,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response delete(String path, JsonObject body, String queryString) throws IOException {
+    public Response delete(String path, String body, String queryString) throws IOException {
         HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body.toString());
+        RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
                 .url(url)

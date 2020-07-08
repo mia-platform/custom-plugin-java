@@ -54,8 +54,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
-        Response response = service.post("test", body, "", new ServiceOptions());
+        Response response = service.post("test", requestBody, "", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
@@ -72,8 +71,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
-        Response response = service.put("test", body, "id=1", new ServiceOptions());
+        Response response = service.put("test", requestBody, "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
@@ -91,8 +89,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        JsonObject body = new JsonParser().parse(requestBody).getAsJsonObject();
-        Response response = service.patch("test", body, "id=1", new ServiceOptions());
+        Response response = service.patch("test", requestBody, "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
@@ -111,7 +108,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.delete("test", new JsonObject(), "id=1", new ServiceOptions());
+        Response response = service.delete("test", "", "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
