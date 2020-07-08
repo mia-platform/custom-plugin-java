@@ -1,10 +1,9 @@
 package eu.miaplatform.service;
 
-import com.google.gson.JsonObject;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
 
 public class Service {
     private static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
@@ -50,7 +49,6 @@ public class Service {
                 .build();
         return client.newCall(request).execute();
     }
-
 
     public Response post(String path, String body, String queryString, ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
@@ -139,5 +137,4 @@ public class Service {
                 .build();
         return client.newCall(request).execute();
     }
-
 }

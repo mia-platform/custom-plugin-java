@@ -28,6 +28,4 @@ public class ServiceClientFactory {
     public static Service getServiceProxy(String serviceName, InitServiceOptions options) {
         return new Service(serviceName, options);
     }
-
-
 }

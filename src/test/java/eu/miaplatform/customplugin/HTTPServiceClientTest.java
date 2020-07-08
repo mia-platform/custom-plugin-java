@@ -16,7 +16,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class HTTPServiceClientTest {
 
-
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(3000);
 
