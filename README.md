@@ -15,7 +15,7 @@ This plugin is framework-independent. Every functionality is built using plain J
 ## Usage
 To get a service proxy you can use the following method from class `ServiceCilentFactory`:
 ### getServiceProxy
-Before getting your service proxy, you need to inject the appropriate InitServiceOptions instance:
+Before getting your service proxy, you need to inject the appropriate `InitServiceOptions` instance:
 
 - Default `InitServiceOptions` (port: 3000, protocol: HTTP)
     ``` java
