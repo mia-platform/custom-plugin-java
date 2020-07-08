@@ -1,13 +1,11 @@
 package eu.miaplatform.customplugin;
 
-import com.google.gson.JsonObject;
 import eu.miaplatform.service.InitServiceOptions;
 import eu.miaplatform.service.Service;
-import okhttp3.Headers;
-
-import java.util.Map;
 
 public class ServiceClientFactory {
+
+    public static final String MICROSERVICE_GATEWAY_SERVICE_NAME_KEY = "MICROSERVICE_GATEWAY_SERVICE_NAME";
 
     public static CRUDServiceClient getCRUDServiceClient(CustomPluginHeadersPropagator headersPropagator) {
         return new CRUDServiceClientImpl(headersPropagator);
@@ -25,7 +23,11 @@ public class ServiceClientFactory {
         return new CRUDServiceClientImpl(apiPath, apiSecret, version, headersPropagator);
     }
 
-    public static Service getServiceProxy(String serviceName, InitServiceOptions options) {
+    public static Service getDirectServiceProxy(String serviceName, InitServiceOptions options) {
         return new Service(serviceName, options);
+    }
+
+    public static Service getServiceProxy(InitServiceOptions options) {
+        return new Service(System.getenv(MICROSERVICE_GATEWAY_SERVICE_NAME_KEY), options);
     }
 }
