@@ -13,7 +13,7 @@ The underlying library which enables the possibility to operate with external se
 This plugin is framework-independent. Every functionality is built using plain Java code. 
 
 ## Usage
-To get a service proxy you can use the following method from class `ServiceCilentFactory`:
+To get a service proxy you can use the following method from class `ServiceClientFactory`:
 ### getServiceProxy
 Before getting your service proxy, you need to inject the appropriate `InitServiceOptions` instance:
 
