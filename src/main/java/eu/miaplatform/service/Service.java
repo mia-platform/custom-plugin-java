@@ -1,6 +1,7 @@
 package eu.miaplatform.service;
 
 import okhttp3.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -23,16 +24,40 @@ public class Service {
     }
 
     private HttpUrl buildUrl(String path, String queryString, InitServiceOptions options) {
-        return new HttpUrl.Builder()
-                .scheme(options.getProtocol().toString())
-                .host(this.serviceName)
-                .port(options.getPort())
-                .addPathSegments(path)
-                .query(queryString)
-                .build();
+        if (options == null && queryString == null) {
+            return new HttpUrl.Builder()
+                    .scheme(this.options.getProtocol().toString())
+                    .host(this.serviceName)
+                    .port(this.options.getPort())
+                    .addPathSegments(path)
+                    .build();
+        } else if (options == null) {
+            return new HttpUrl.Builder()
+                    .scheme(this.options.getProtocol().toString())
+                    .host(this.serviceName)
+                    .port(this.options.getPort())
+                    .addPathSegments(path)
+                    .query(queryString)
+                    .build();
+        } else if (queryString == null) {
+            return new HttpUrl.Builder()
+                    .scheme(options.getProtocol().toString())
+                    .host(this.serviceName)
+                    .port(options.getPort())
+                    .addPathSegments(path)
+                    .build();
+        } else {
+            return new HttpUrl.Builder()
+                    .scheme(options.getProtocol().toString())
+                    .host(this.serviceName)
+                    .port(options.getPort())
+                    .addPathSegments(path)
+                    .query(queryString)
+                    .build();
+        }
     }
 
-    public Response get(String path, String queryString, ServiceOptions options) throws IOException {
+    public Response get(String path, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
         Request request = new Request.Builder()
                 .headers(this.headers)
@@ -41,16 +66,7 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response get(String path, String queryString) throws IOException {
-        HttpUrl url = buildUrl(path, queryString, this.options);
-        Request request = new Request.Builder()
-                .headers(this.headers)
-                .url(url)
-                .build();
-        return client.newCall(request).execute();
-    }
-
-    public Response post(String path, String body, String queryString, ServiceOptions options) throws IOException {
+    public Response post(String path, String body, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
@@ -61,18 +77,8 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response post(String path, String body, String queryString) throws IOException {
-        HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body);
-        Request request =  new Request.Builder()
-                .headers(this.headers)
-                .url(url)
-                .post(reqBody)
-                .build();
-        return client.newCall(request).execute();
-    }
 
-    public Response put(String path, String body, String queryString, ServiceOptions options) throws IOException {
+    public Response put(String path, String body, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
@@ -83,18 +89,7 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response put(String path, String body, String queryString) throws IOException {
-        HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body);
-        Request request =  new Request.Builder()
-                .headers(this.headers)
-                .url(url)
-                .put(reqBody)
-                .build();
-        return client.newCall(request).execute();
-    }
-
-    public Response patch(String path, String body, String queryString, ServiceOptions options) throws IOException {
+    public Response patch(String path, String body, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
         RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
@@ -105,30 +100,9 @@ public class Service {
         return client.newCall(request).execute();
     }
 
-    public Response patch(String path, String body, String queryString) throws IOException {
-        HttpUrl url = buildUrl(path, queryString, this.options);
-        RequestBody reqBody = RequestBody.create(JSON, body);
-        Request request =  new Request.Builder()
-                .headers(this.headers)
-                .url(url)
-                .patch(reqBody)
-                .build();
-        return client.newCall(request).execute();
-    }
 
-    public Response delete(String path, String body, String queryString, ServiceOptions options) throws IOException {
+    public Response delete(String path, String body, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
         HttpUrl url = buildUrl(path, queryString, options);
-        RequestBody reqBody = RequestBody.create(JSON, body);
-        Request request =  new Request.Builder()
-                .headers(this.headers)
-                .url(url)
-                .delete(reqBody)
-                .build();
-        return client.newCall(request).execute();
-    }
-
-    public Response delete(String path, String body, String queryString) throws IOException {
-        HttpUrl url = buildUrl(path, queryString, this.options);
         RequestBody reqBody = RequestBody.create(JSON, body);
         Request request =  new Request.Builder()
                 .headers(this.headers)
