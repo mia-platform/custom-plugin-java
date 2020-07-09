@@ -1,4 +1,4 @@
-package eu.miaplatform.customplugin;
+package eu.miaplatform.decorators;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package eu.miaplatform.customplugin;
+package eu.miaplatform.service;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
