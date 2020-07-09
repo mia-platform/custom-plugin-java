@@ -33,7 +33,7 @@ public class HTTPServiceClientTest {
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", "id=1");
+        Response response = service.get("test", "id=1", null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
