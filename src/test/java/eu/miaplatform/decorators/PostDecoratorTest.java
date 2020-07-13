@@ -38,7 +38,6 @@ public class PostDecoratorTest {
                 .setBody("{\"a\":\"42\"}")
                 .build();
 
-
         assertNotEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getOriginalResponse().getBody());
         assertEquals(postDecoratorRequest.getOriginalResponseBody(), "{\"bar\":\"baz\"}");
         assertEquals(updatedRequest.getOriginalResponse().getBody(), "{\"a\":\"42\"}");
