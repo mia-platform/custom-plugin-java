@@ -19,7 +19,7 @@ public class PreDecoratorRequest {
                         .build());
     }
 
-    protected Request getRequest() {
+    protected Request getOriginalRequest() {
         return this.request;
     }
 

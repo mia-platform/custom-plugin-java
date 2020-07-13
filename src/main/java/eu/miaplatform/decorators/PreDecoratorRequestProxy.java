@@ -10,17 +10,17 @@ public class PreDecoratorRequestProxy {
     }
 
     public PreDecoratorRequest setBody(String body) {
-        request.setBody(body);
-        return PreDecoratorRequest.builder().request(request).build();
+        this.request.setBody(body);
+        return PreDecoratorRequest.builder().request(this.request).build();
     }
 
     public PreDecoratorRequest setHeaders(Map<String,String> headers) {
-        request.setHeaders(headers);
-        return PreDecoratorRequest.builder().request(request).build();
+        this.request.setHeaders(headers);
+        return PreDecoratorRequest.builder().request(this.request).build();
     }
 
     public PreDecoratorRequest setQuery(String query) {
-        request.setQuery(query);
-        return PreDecoratorRequest.builder().request(request).build();
+        this.request.setQuery(query);
+        return PreDecoratorRequest.builder().request(this.request).build();
     }
 }
