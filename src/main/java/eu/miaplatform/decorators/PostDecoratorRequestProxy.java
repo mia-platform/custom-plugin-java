@@ -31,6 +31,7 @@ public class PostDecoratorRequestProxy {
             return PostDecoratorRequest.builder().request(request).response(response).build();
         }
     }
+
     private PostDecoratorRequestProxy() {
 
     }

@@ -8,8 +8,8 @@ import java.util.Map;
 public class PreDecoratorRequest {
     private final Request request;
 
-    public PreDecoratorRequestProxy changeOriginalRequest() {
-        return new PreDecoratorRequestProxy(
+    public PreDecoratorRequestProxy.Builder changeOriginalRequest() {
+        return new PreDecoratorRequestProxy.Builder(
                 Request.builder()
                         .method(this.request.getMethod())
                         .path(this.request.getPath())

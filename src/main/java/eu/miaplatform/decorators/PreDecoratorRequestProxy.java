@@ -3,24 +3,34 @@ package eu.miaplatform.decorators;
 import java.util.Map;
 
 public class PreDecoratorRequestProxy {
-    private final Request request;
+    public static class Builder {
+        private final Request request;
 
-    public PreDecoratorRequestProxy(Request originalRequest) {
-        this.request = originalRequest;
+        public Builder(Request originalRequest) {
+            this.request = originalRequest;
+        }
+
+        public Builder setBody(String body) {
+            this.request.setBody(body);
+            return this;
+        }
+
+        public Builder setHeaders(Map<String, String> headers) {
+            this.request.setHeaders(headers);
+            return this;
+        }
+
+        public Builder setQuery(String query) {
+            this.request.setQuery(query);
+            return this;
+        }
+
+        public PreDecoratorRequest build() {
+            return PreDecoratorRequest.builder().request(request).build();
+        }
     }
 
-    public PreDecoratorRequest setBody(String body) {
-        this.request.setBody(body);
-        return PreDecoratorRequest.builder().request(this.request).build();
-    }
+    private PreDecoratorRequestProxy() {
 
-    public PreDecoratorRequest setHeaders(Map<String,String> headers) {
-        this.request.setHeaders(headers);
-        return PreDecoratorRequest.builder().request(this.request).build();
-    }
-
-    public PreDecoratorRequest setQuery(String query) {
-        this.request.setQuery(query);
-        return PreDecoratorRequest.builder().request(this.request).build();
     }
 }
