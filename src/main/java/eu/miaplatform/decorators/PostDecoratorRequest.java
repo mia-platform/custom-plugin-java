@@ -9,8 +9,8 @@ public class PostDecoratorRequest {
     private Request request;
     private Response response;
 
-    public PostDecoratorRequestProxy changeOriginalRequest() {
-        return new PostDecoratorRequestProxy(
+    public PostDecoratorRequestProxy.Builder changeOriginalRequest() {
+        return new PostDecoratorRequestProxy.Builder(
                 Request.builder()
                         .method(this.request.getMethod())
                         .path(this.request.getPath())

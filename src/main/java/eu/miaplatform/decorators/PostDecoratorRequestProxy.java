@@ -1,29 +1,37 @@
 package eu.miaplatform.decorators;
 
-
 import java.util.Map;
 
 public class PostDecoratorRequestProxy {
-    private Request request;
-    private Response response;
+    public static class Builder {
+        private Request request;
+        private Response response;
 
-    public PostDecoratorRequestProxy(Request originalRequest, Response originalResponse) {
-        this.request = originalRequest;
-        this.response = originalResponse;
+        public Builder(Request originalRequest, Response originalResponse) {
+            this.request = originalRequest;
+            this.response = originalResponse;
+        }
+
+        public Builder setBody(String body) {
+            this.response.setBody(body);
+            return this;
+        }
+
+        public Builder setStatusCode(int statusCode) {
+            this.response.setStatusCode(statusCode);
+            return this;
+        }
+
+        public Builder setHeaders(Map<String, String> headers) {
+            this.response.setHeaders(headers);
+            return this;
+        }
+
+        public PostDecoratorRequest build() {
+            return PostDecoratorRequest.builder().request(request).response(response).build();
+        }
     }
+    private PostDecoratorRequestProxy() {
 
-    public PostDecoratorRequest setBody(String body) {
-        this.response.setBody(body);
-        return PostDecoratorRequest.builder().request(request).response(response).build();
-    }
-
-    public PostDecoratorRequest setStatusCode(int statusCode) {
-        this.response.setStatusCode(statusCode);
-        return PostDecoratorRequest.builder().request(request).response(response).build();
-    }
-
-    public PostDecoratorRequest setHeaders(Map<String,String> headers) {
-        this.response.setHeaders(headers);
-        return PostDecoratorRequest.builder().request(request).response(response).build();
     }
 }
