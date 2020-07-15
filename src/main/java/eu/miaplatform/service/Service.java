@@ -27,13 +27,8 @@ public class Service {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
                .host(this.serviceName)
                .addPathSegment(path);
-        if (options == null) {
-            urlBuilder.port(this.options.getPort());
-            urlBuilder.scheme(this.options.getProtocol().toString());
-        } else {
-            urlBuilder.port(options.getPort());
-            urlBuilder.scheme(options.getProtocol().toString());
-        }
+        urlBuilder.port(options == null ? this.options.getPort() : options.getPort());
+        urlBuilder.scheme(options == null ? this.options.getProtocol().toString() : options.getProtocol().toString());
         if (queryString != null) {
             urlBuilder.query(queryString);
         }
