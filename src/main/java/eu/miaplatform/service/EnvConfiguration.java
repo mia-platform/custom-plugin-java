@@ -10,6 +10,7 @@ import java.util.Map;
 @Data
 public class EnvConfiguration {
     private Map<String, String> defaultEnv;
+    private final static String LIST_SEPARATOR = ",";
 
     public EnvConfiguration() {
         defaultEnv = new HashMap<>();
@@ -51,7 +52,6 @@ public class EnvConfiguration {
 
     public List<String> getStringList(String envVariable) {
         String value = getAndRequire(envVariable);
-        String LIST_SEPARATOR = ",";
         return Arrays.asList(value.split(LIST_SEPARATOR));
     }
 
