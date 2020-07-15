@@ -7,8 +7,8 @@ import java.util.Map;
 @Data
 @Builder
 @AllArgsConstructor
-public class DecoratorResponse implements DecoratorChangingTarget {
+public class DecoratorResponse {
     private Map<String, String> headers;
     private int statusCode;
-    private DecoratorChangingTarget body;
+    private Object body;
 }

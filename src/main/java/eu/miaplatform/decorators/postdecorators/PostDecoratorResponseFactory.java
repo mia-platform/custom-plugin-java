@@ -9,7 +9,7 @@ public class PostDecoratorResponseFactory {
         if (postDecoratorRequest == null) {
             return new LeaveOriginalResponseUnmodified();
         } else {
-            return new ChangeOriginalResponse(new HashMap<>(), postDecoratorRequest.getResponseBody());
+            return new ChangeOriginalResponse(postDecoratorRequest.getResponseBody());
         }
     }
 }

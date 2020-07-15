@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Data
 @Builder
-public class DecoratorRequest implements DecoratorChangingTarget{
+public class DecoratorRequest {
     private String method;
     private String path;
     private Map<String, String> headers;
