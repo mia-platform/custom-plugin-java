@@ -12,7 +12,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class HTTPServiceClientTest {
+public class ServiceTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(3000);
 

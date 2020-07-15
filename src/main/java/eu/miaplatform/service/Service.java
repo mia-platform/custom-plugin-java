@@ -24,37 +24,20 @@ public class Service {
     }
 
     private HttpUrl buildUrl(String path, String queryString, InitServiceOptions options) {
-        if (options == null && queryString == null) {
-            return new HttpUrl.Builder()
-                    .scheme(this.options.getProtocol().toString())
-                    .host(this.serviceName)
-                    .port(this.options.getPort())
-                    .addPathSegments(path)
-                    .build();
-        } else if (options == null) {
-            return new HttpUrl.Builder()
-                    .scheme(this.options.getProtocol().toString())
-                    .host(this.serviceName)
-                    .port(this.options.getPort())
-                    .addPathSegments(path)
-                    .query(queryString)
-                    .build();
-        } else if (queryString == null) {
-            return new HttpUrl.Builder()
-                    .scheme(options.getProtocol().toString())
-                    .host(this.serviceName)
-                    .port(options.getPort())
-                    .addPathSegments(path)
-                    .build();
+        HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
+               .host(this.serviceName)
+               .addPathSegment(path);
+        if (options == null) {
+            urlBuilder.port(this.options.getPort());
+            urlBuilder.scheme(this.options.getProtocol().toString());
         } else {
-            return new HttpUrl.Builder()
-                    .scheme(options.getProtocol().toString())
-                    .host(this.serviceName)
-                    .port(options.getPort())
-                    .addPathSegments(path)
-                    .query(queryString)
-                    .build();
+            urlBuilder.port(options.getPort());
+            urlBuilder.scheme(options.getProtocol().toString());
         }
+        if (queryString != null) {
+            urlBuilder.query(queryString);
+        }
+       return urlBuilder.build();
     }
 
     public Response get(String path, @Nullable String queryString, @Nullable ServiceOptions options) throws IOException {
