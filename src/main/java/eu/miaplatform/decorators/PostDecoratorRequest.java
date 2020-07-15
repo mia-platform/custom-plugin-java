@@ -61,11 +61,15 @@ public class PostDecoratorRequest {
         return this.response.getHeaders();
     }
 
-    public String getOriginalResponseBody() {
+    public Object getOriginalResponseBody() {
         return this.response.getBody();
     }
 
     public int getOriginalResponseStatusCode() {
         return  this.response.getStatusCode();
+    }
+
+    public Response getResponseBody() {
+        return this.response;
     }
 }

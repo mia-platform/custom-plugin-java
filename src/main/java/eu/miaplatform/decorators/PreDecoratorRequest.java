@@ -19,16 +19,12 @@ public class PreDecoratorRequest {
                         .build());
     }
 
+    public PreDecoratorRequest leaveOriginalRequestUnmodified() {
+        return null;
+    }
+
     protected Request getOriginalRequest() {
         return this.request;
-    }
-
-    public PreDecoratorRequest leaveOriginalRequestUnmodified() {
-        return this;
-    }
-
-    public PreDecoratorRequest abortChain() {
-        return this;
     }
 
     public String getOriginalRequestBody() {
@@ -45,5 +41,9 @@ public class PreDecoratorRequest {
 
     public String getOriginalRequestPath() {
         return this.request.getPath();
+    }
+
+    public Request getResponseBody() {
+        return this.request;
     }
 }

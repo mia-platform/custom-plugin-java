@@ -3,6 +3,8 @@ package eu.miaplatform.decorators;
 import java.util.Map;
 
 public class PostDecoratorRequestProxy {
+   private final int ABORT_CHAIN_STATUS_CODE = 418;
+
     public static class Builder {
         private Request request;
         private Response response;
