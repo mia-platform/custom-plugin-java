@@ -1,12 +1,14 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.predecorators;
+
+import eu.miaplatform.decorators.DecoratorRequest;
 
 import java.util.Map;
 
 public class PreDecoratorRequestProxy {
     public static class Builder {
-        private final Request request;
+        private final DecoratorRequest request;
 
-        public Builder(Request originalRequest) {
+        public Builder(DecoratorRequest originalRequest) {
             this.request = originalRequest;
         }
 

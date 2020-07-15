@@ -1,13 +1,15 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.predecorators;
 
+import eu.miaplatform.decorators.DecoratorRequest;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class PreDecoratorTest {
     @Test
     public void originalRequestUnmodified() {
-        Request originalRequest = Request.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().request(originalRequest).build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.leaveOriginalRequestUnmodified();
@@ -18,7 +20,7 @@ public class PreDecoratorTest {
 
     @Test
     public void originalRequestGetsModified() {
-        Request originalRequest = Request.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().request(originalRequest).build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.changeOriginalRequest()

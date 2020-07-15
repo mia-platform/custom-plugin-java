@@ -1,15 +1,16 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.postdecorators;
+
+import eu.miaplatform.decorators.DecoratorRequest;
+import eu.miaplatform.decorators.DecoratorResponse;
 
 import java.util.Map;
 
 public class PostDecoratorRequestProxy {
-   private final int ABORT_CHAIN_STATUS_CODE = 418;
-
     public static class Builder {
-        private Request request;
-        private Response response;
+        private DecoratorRequest request;
+        private DecoratorResponse response;
 
-        public Builder(Request originalRequest, Response originalResponse) {
+        public Builder(DecoratorRequest originalRequest, DecoratorResponse originalResponse) {
             this.request = originalRequest;
             this.response = originalResponse;
         }

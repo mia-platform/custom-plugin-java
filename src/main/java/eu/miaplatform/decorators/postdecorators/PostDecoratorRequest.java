@@ -1,31 +1,33 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.postdecorators;
 
+import eu.miaplatform.decorators.DecoratorRequest;
+import eu.miaplatform.decorators.DecoratorResponse;
 import lombok.Builder;
 
 import java.util.Map;
 
 @Builder
 public class PostDecoratorRequest {
-    private Request request;
-    private Response response;
+    private DecoratorRequest request;
+    private DecoratorResponse response;
 
     public PostDecoratorRequestProxy.Builder changeOriginalRequest() {
         return new PostDecoratorRequestProxy.Builder(
-                Request.builder()
+                DecoratorRequest.builder()
                         .method(this.request.getMethod())
                         .path(this.request.getPath())
                         .headers(this.request.getHeaders())
                         .query(this.request.getQuery())
                         .body(this.request.getBody())
                         .build(),
-                Response.builder()
+                DecoratorResponse.builder()
                         .statusCode(this.response.getStatusCode())
                         .headers(this.response.getHeaders())
                         .body(this.response.getBody())
                         .build());
     }
 
-    protected Request getOriginalRequest() {
+    protected DecoratorRequest getOriginalRequest() {
         return this.request;
     }
 
@@ -53,7 +55,7 @@ public class PostDecoratorRequest {
         return this.request.getPath();
     }
 
-    public Response getOriginalResponse() {
+    public DecoratorResponse getOriginalResponse() {
         return this.response;
     }
 
@@ -69,7 +71,7 @@ public class PostDecoratorRequest {
         return  this.response.getStatusCode();
     }
 
-    public Response getResponseBody() {
+    public DecoratorResponse getResponseBody() {
         return this.response;
     }
 }

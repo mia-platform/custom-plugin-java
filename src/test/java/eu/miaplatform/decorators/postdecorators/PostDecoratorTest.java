@@ -1,5 +1,7 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.postdecorators;
 
+import eu.miaplatform.decorators.DecoratorRequest;
+import eu.miaplatform.decorators.DecoratorResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,8 +10,8 @@ import static org.junit.Assert.assertNotEquals;
 public class PostDecoratorTest {
     @Test
     public void originalRequestUnmodified() {
-        Request originalRequest = Request.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        Response originalResponse = Response.builder().body("{\"bar\":\"baz\"})").statusCode(200).build();
+        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"})").statusCode(200).build();
 
         PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
                 .request(originalRequest)
@@ -25,8 +27,8 @@ public class PostDecoratorTest {
 
     @Test
     public void originalRequestGetsModified() {
-        Request originalRequest = Request.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        Response originalResponse = Response.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
+        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
 
         PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
                 .request(originalRequest)
