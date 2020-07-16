@@ -2,11 +2,14 @@ package eu.miaplatform.decorators.postdecorators;
 
 import eu.miaplatform.decorators.DecoratorRequest;
 import eu.miaplatform.decorators.DecoratorResponse;
-import lombok.Builder;
+import lombok.*;
 
 import java.util.Map;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PostDecoratorRequest {
     private DecoratorRequest request;
     private DecoratorResponse response;
@@ -18,7 +21,7 @@ public class PostDecoratorRequest {
                         .path(this.request.getPath())
                         .headers(this.request.getHeaders())
                         .query(this.request.getQuery())
-                        .body(this.request.getBody())
+                        .body(this.request.getBody  ())
                         .build(),
                 DecoratorResponse.builder()
                         .statusCode(this.response.getStatusCode())
@@ -31,15 +34,15 @@ public class PostDecoratorRequest {
         return this.request;
     }
 
-    public PostDecoratorRequest leaveOriginalRequestUnmodified() {
-        return this;
+    public PostDecoratorRequest leaveOriginalResponseUnmodified() {
+        return null;
     }
 
     public PostDecoratorRequest abortChain() {
         return this;
     }
 
-    public String getOriginalRequestBody() {
+    public Object getOriginalRequestBody() {
         return this.request.getBody();
     }
 
@@ -68,7 +71,7 @@ public class PostDecoratorRequest {
     }
 
     public int getOriginalResponseStatusCode() {
-        return  this.response.getStatusCode();
+        return this.response.getStatusCode();
     }
 
     public DecoratorResponse getResponseBody() {

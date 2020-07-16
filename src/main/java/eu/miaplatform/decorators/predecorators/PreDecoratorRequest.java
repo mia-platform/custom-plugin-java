@@ -1,13 +1,16 @@
 package eu.miaplatform.decorators.predecorators;
 
 import eu.miaplatform.decorators.DecoratorRequest;
-import lombok.Builder;
+import lombok.*;
 
 import java.util.Map;
 
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class PreDecoratorRequest {
-    private final DecoratorRequest request;
+    private DecoratorRequest request;
 
     public PreDecoratorRequestProxy.Builder changeOriginalRequest() {
         return new PreDecoratorRequestProxy.Builder(
@@ -28,7 +31,7 @@ public class PreDecoratorRequest {
         return this.request;
     }
 
-    public String getOriginalRequestBody() {
+    public Object getOriginalRequestBody() {
         return this.request.getBody();
     }
 

@@ -18,7 +18,7 @@ public class PostDecoratorTest {
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.leaveOriginalRequestUnmodified();
+        PostDecoratorRequest updatedRequest = postDecoratorRequest.leaveOriginalResponseUnmodified();
 
         assertEquals(postDecoratorRequest.getOriginalRequestBody(), updatedRequest.getOriginalRequestBody());
         assertEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getOriginalResponseBody());

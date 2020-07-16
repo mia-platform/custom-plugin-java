@@ -22,7 +22,7 @@ public class PreDecoratorRequestProxy {
             return this;
         }
 
-        public Builder setQuery(String query) {
+        public Builder setQuery(Map<String, String> query) {
             this.request.setQuery(query);
             return this;
         }
