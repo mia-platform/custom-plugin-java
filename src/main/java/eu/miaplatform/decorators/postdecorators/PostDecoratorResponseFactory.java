@@ -17,11 +17,13 @@ public class PostDecoratorResponseFactory {
     }
 
     public static DecoratorResponse abortChain(int finalStatusCode) {
-        return new AbortChainResponse(finalStatusCode, "Decorator chain aborted with status code " + finalStatusCode, DEFAULT_HEADERS);
+        DecoratorResponse body = DecoratorResponse.builder().statusCode(finalStatusCode).build();
+        return new AbortChainResponse(body, DEFAULT_HEADERS);
     }
 
-    public static DecoratorResponse abortChain(int finalStatusCode, String finalBody, Map<String, String> finalHeaders) {
-        return new AbortChainResponse(finalStatusCode, finalBody, finalHeaders);
+    public static DecoratorResponse abortChain(int finalStatusCode, Object finalBody, Map<String, String> finalHeaders) {
+        DecoratorResponse body = DecoratorResponse.builder().statusCode(finalStatusCode).body(finalBody).build();
+        return new AbortChainResponse(body, finalHeaders);
     }
 }
 

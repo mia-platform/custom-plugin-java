@@ -9,7 +9,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DecoratorResponse {
-    private Map<String, String> headers;
     private int statusCode;
+    private Map<String, String> headers;
     private Object body;
 }

@@ -7,6 +7,6 @@ import static eu.miaplatform.decorators.constants.DecoratorConstants.LEAVE_ORIGI
 
 public class LeaveOriginalRequestUnmodified extends DecoratorResponse {
     public LeaveOriginalRequestUnmodified() {
-        super(DEFAULT_HEADERS, LEAVE_ORIGINAL_UNCHANGED_STATUS_CODE, null);
+        super(LEAVE_ORIGINAL_UNCHANGED_STATUS_CODE, DEFAULT_HEADERS,null);
     }
 }

@@ -8,10 +8,10 @@ import static eu.miaplatform.decorators.constants.DecoratorConstants.ABORT_CHAIN
 
 @Data
 public class AbortChainResponse extends DecoratorResponse{
-    private int finalStatusCode;
+    private int statusCode;
 
-    public AbortChainResponse(int finalStatusCode, String finalBody, Map<String, String> finalHeaders) {
-        super(finalHeaders, ABORT_CHAIN_STATUS_CODE, finalBody);
-        this.finalStatusCode = finalStatusCode;
+    public AbortChainResponse(Object finalBody, Map<String, String> finalHeaders) {
+        super(ABORT_CHAIN_STATUS_CODE, finalHeaders, finalBody);
+        this.statusCode = statusCode;
     }
 }

@@ -8,6 +8,6 @@ import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEA
 
 public class ChangeOriginalRequest extends DecoratorResponse {
     ChangeOriginalRequest(DecoratorRequest body) {
-        super(DEFAULT_HEADERS, CHANGE_ORIGINAL_STATUS_CODE, body);
+        super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, body);
     }
 }
