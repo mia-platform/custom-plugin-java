@@ -4,12 +4,11 @@ import eu.miaplatform.decorators.DecoratorRequest;
 import eu.miaplatform.decorators.DecoratorResponse;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
-public class PostDecoratorTest {
+public class PostDecoratorRequestTest {
     @Test
-    public void originalRequestUnmodified() {
+    public void originalResponseUnmodified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"})").statusCode(200).build();
 
@@ -18,15 +17,13 @@ public class PostDecoratorTest {
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.leaveOriginalRequestUnmodified();
+        PostDecoratorRequest updatedRequest = postDecoratorRequest.leaveOriginalResponseUnmodified();
 
-        assertEquals(postDecoratorRequest.getOriginalRequestBody(), updatedRequest.getOriginalRequestBody());
-        assertEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getOriginalResponseBody());
-        assertEquals(postDecoratorRequest.getOriginalResponseStatusCode(), updatedRequest.getOriginalResponseStatusCode());
+        assertNull(updatedRequest);
     }
 
     @Test
-    public void originalRequestGetsModified() {
+    public void originalResponseGetsModified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
 
@@ -35,7 +32,7 @@ public class PostDecoratorTest {
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.changeOriginalRequest()
+        PostDecoratorRequest updatedRequest = postDecoratorRequest.changeOriginalResponse()
                 .setStatusCode(204)
                 .setBody("{\"a\":\"42\"}")
                 .build();

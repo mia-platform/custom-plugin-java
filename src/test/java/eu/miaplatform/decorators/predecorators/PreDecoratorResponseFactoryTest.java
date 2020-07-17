@@ -1,12 +1,12 @@
-package eu.miaplatform.decorators;
+package eu.miaplatform.decorators.predecorators;
 
-import eu.miaplatform.decorators.predecorators.PreDecoratorRequest;
-import eu.miaplatform.decorators.predecorators.PreDecoratorResponseFactory;
+import eu.miaplatform.decorators.DecoratorRequest;
+import eu.miaplatform.decorators.DecoratorResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class DecoratorResponseTest {
+public class PreDecoratorResponseFactoryTest {
     @Test
     public void leaveOriginalRequestUnmodified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();

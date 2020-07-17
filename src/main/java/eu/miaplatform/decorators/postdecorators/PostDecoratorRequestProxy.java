@@ -15,7 +15,7 @@ public class PostDecoratorRequestProxy {
             this.response = originalResponse;
         }
 
-        public Builder setBody(String body) {
+        public Builder setBody(Object body) {
             this.response.setBody(body);
             return this;
         }

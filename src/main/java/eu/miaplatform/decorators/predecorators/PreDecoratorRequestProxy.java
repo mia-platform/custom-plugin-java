@@ -12,7 +12,7 @@ public class PreDecoratorRequestProxy {
             this.request = originalRequest;
         }
 
-        public Builder setBody(String body) {
+        public Builder setBody(Object body) {
             this.request.setBody(body);
             return this;
         }
@@ -22,7 +22,7 @@ public class PreDecoratorRequestProxy {
             return this;
         }
 
-        public Builder setQuery(String query) {
+        public Builder setQuery(Map<String, String> query) {
             this.request.setQuery(query);
             return this;
         }

@@ -1,24 +1,28 @@
 package eu.miaplatform.decorators.postdecorators;
 
-import eu.miaplatform.decorators.DecoratorRequest;
-import eu.miaplatform.decorators.DecoratorResponse;
-import lombok.Builder;
+import eu.miaplatform.decorators.*;
+import lombok.*;
 
 import java.util.Map;
 
+import static eu.miaplatform.decorators.constants.DecoratorConstants.ABORT_CHAIN_STATUS_CODE;
+
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PostDecoratorRequest {
     private DecoratorRequest request;
     private DecoratorResponse response;
 
-    public PostDecoratorRequestProxy.Builder changeOriginalRequest() {
+    public PostDecoratorRequestProxy.Builder changeOriginalResponse() {
         return new PostDecoratorRequestProxy.Builder(
                 DecoratorRequest.builder()
                         .method(this.request.getMethod())
                         .path(this.request.getPath())
                         .headers(this.request.getHeaders())
                         .query(this.request.getQuery())
-                        .body(this.request.getBody())
+                        .body(this.request.getBody  ())
                         .build(),
                 DecoratorResponse.builder()
                         .statusCode(this.response.getStatusCode())
@@ -27,19 +31,15 @@ public class PostDecoratorRequest {
                         .build());
     }
 
+    public PostDecoratorRequest leaveOriginalResponseUnmodified() {
+        return null;
+    }
+
     protected DecoratorRequest getOriginalRequest() {
         return this.request;
     }
 
-    public PostDecoratorRequest leaveOriginalRequestUnmodified() {
-        return this;
-    }
-
-    public PostDecoratorRequest abortChain() {
-        return this;
-    }
-
-    public String getOriginalRequestBody() {
+    public Object getOriginalRequestBody() {
         return this.request.getBody();
     }
 
@@ -68,7 +68,7 @@ public class PostDecoratorRequest {
     }
 
     public int getOriginalResponseStatusCode() {
-        return  this.response.getStatusCode();
+        return this.response.getStatusCode();
     }
 
     public DecoratorResponse getResponseBody() {

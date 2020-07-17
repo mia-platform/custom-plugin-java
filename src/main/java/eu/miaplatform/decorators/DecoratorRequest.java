@@ -1,16 +1,17 @@
 package eu.miaplatform.decorators;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Map;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DecoratorRequest {
     private String method;
     private String path;
     private Map<String, String> headers;
-    private String query;
-    private String body;
+    private Map<String, String> query;
+    private Object body;
 }
