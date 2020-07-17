@@ -50,4 +50,8 @@ public class PreDecoratorRequest {
     public DecoratorRequest getResponseBody() {
         return this.request;
     }
+
+    public void setQuery(String path) {
+        this.request.setPath("foo");
+    }
 }

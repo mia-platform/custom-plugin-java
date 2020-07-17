@@ -35,7 +35,7 @@ public class PostDecoratorTest {
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.changeOriginalRequest()
+        PostDecoratorRequest updatedRequest = postDecoratorRequest.changeOriginalResponse()
                 .setStatusCode(204)
                 .setBody("{\"a\":\"42\"}")
                 .build();

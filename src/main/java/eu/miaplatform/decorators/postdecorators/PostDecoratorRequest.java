@@ -1,10 +1,11 @@
 package eu.miaplatform.decorators.postdecorators;
 
-import eu.miaplatform.decorators.DecoratorRequest;
-import eu.miaplatform.decorators.DecoratorResponse;
+import eu.miaplatform.decorators.*;
 import lombok.*;
 
 import java.util.Map;
+
+import static eu.miaplatform.decorators.constants.DecoratorConstants.ABORT_CHAIN_STATUS_CODE;
 
 @Builder
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class PostDecoratorRequest {
     private DecoratorRequest request;
     private DecoratorResponse response;
 
-    public PostDecoratorRequestProxy.Builder changeOriginalRequest() {
+    public PostDecoratorRequestProxy.Builder changeOriginalResponse() {
         return new PostDecoratorRequestProxy.Builder(
                 DecoratorRequest.builder()
                         .method(this.request.getMethod())
@@ -30,16 +31,12 @@ public class PostDecoratorRequest {
                         .build());
     }
 
-    protected DecoratorRequest getOriginalRequest() {
-        return this.request;
-    }
-
     public PostDecoratorRequest leaveOriginalResponseUnmodified() {
         return null;
     }
 
-    public PostDecoratorRequest abortChain() {
-        return this;
+    protected DecoratorRequest getOriginalRequest() {
+        return this.request;
     }
 
     public Object getOriginalRequestBody() {
