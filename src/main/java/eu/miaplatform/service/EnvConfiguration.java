@@ -1,25 +1,28 @@
 package eu.miaplatform.service;
 
-import lombok.Data;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Data
 public class EnvConfiguration {
-    private Map<String, String> defaultEnv;
+    private Map<String, String> envVariables;
     private final static String LIST_SEPARATOR = ",";
 
     public EnvConfiguration() {
-        defaultEnv = new HashMap<>();
-        defaultEnv.put("USERID_HEADER_KEY", "userid-header-key");
-        defaultEnv.put("GROUPS_HEADER_KEY", "groups-header-key");
-        defaultEnv.put("CLIENTTYPE_HEADER_KEY", "clienttype-header-key");
-        defaultEnv.put("BACKOFFICE_HEADER_KEY", "backoffice-header-key");
-        defaultEnv.put("GROUP_TO_GREET", "group-to-greet");
-        defaultEnv.put("MICROSERVICE_GATEWAY_SERVICE_NAME", "microservice-gateway");
+        envVariables = new HashMap<>();
+        envVariables.put("USERID_HEADER_KEY", "userid-header-key");
+        envVariables.put("GROUPS_HEADER_KEY", "groups-header-key");
+        envVariables.put("CLIENTTYPE_HEADER_KEY", "clienttype-header-key");
+        envVariables.put("BACKOFFICE_HEADER_KEY", "backoffice-header-key");
+        envVariables.put("GROUP_TO_GREET", "group-to-greet");
+        envVariables.put("MICROSERVICE_GATEWAY_SERVICE_NAME", "microservice-gateway");
+    }
+
+    public void parseEnvironment() throws EnvConfigurationException {
+        for (String variableName : envVariables.keySet()) {
+            envVariables.put(variableName, get(variableName));
+        }
     }
 
     public String get(String envVariable) throws EnvConfigurationException {
@@ -32,6 +35,10 @@ public class EnvConfiguration {
 
     public String get(String envVariable, String defaultValue) {
         return System.getenv(envVariable) == null ? defaultValue : System.getenv(envVariable);
+    }
+
+    public void put(String envVariable, String value) {
+        envVariables.put(envVariable, value);
     }
 
     public String getAndRequire(String envVariable) {
