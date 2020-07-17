@@ -12,7 +12,7 @@ public class PreDecoratorRequestProxy {
             this.request = originalRequest;
         }
 
-        public Builder setBody(String body) {
+        public Builder setBody(Object body) {
             this.request.setBody(body);
             return this;
         }

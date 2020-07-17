@@ -3,8 +3,7 @@ package eu.miaplatform.decorators.predecorators;
 import eu.miaplatform.decorators.DecoratorRequest;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class PreDecoratorTest {
     @Test
@@ -14,8 +13,7 @@ public class PreDecoratorTest {
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.leaveOriginalRequestUnmodified();
 
-        assertEquals(preDecoratorRequest.getOriginalRequestBody(), "{\"foo\":\"bar\"}");
-        assertEquals(updatedRequest.getOriginalRequestBody(), preDecoratorRequest.getOriginalRequestBody());
+        assertNull(updatedRequest);
     }
 
     @Test
@@ -31,5 +29,4 @@ public class PreDecoratorTest {
         assertEquals(preDecoratorRequest.getOriginalRequestBody(), "{\"foo\":\"bar\"}");
         assertEquals(updatedRequest.getOriginalRequest().getBody(), "{\"baz\":\"bam\"}");
     }
-
 }
