@@ -6,7 +6,7 @@ import static eu.miaplatform.decorators.constants.DecoratorConstants.CHANGE_ORIG
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
 
 public class ChangeOriginalResponse extends DecoratorResponse {
-    ChangeOriginalResponse(DecoratorResponse body) {
+    public ChangeOriginalResponse(DecoratorResponse body) {
         super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, body);
     }
 }

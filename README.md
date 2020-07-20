@@ -38,3 +38,37 @@ To get a service proxy, you can use the following methods from class `ServiceCli
      ``` java
     Service serviceClient = ServiceClientFactory.getServiceProxy(initOptions);
     ``` 
+### Decorators
+
+#### PRE decorators
+##### Request
+An instance of class `PreDecoratorRequest` can be used as input to the decorator handler.
+
+The utility functions exposed by the `PreDecoratorRequest` instance can be used to access the original request:
+
++ `getOriginalRequestMethod()` - returns the original request method
++ `getOriginalRequestPath()` - returns the path of the original request
++ `getOriginalRequestHeaders()` - returns the headers of the original request
++ `getOriginalRequestQuery()` - returns the querystring of the original request
++ `getOriginalRequestBody()` - returns the body of the original request
+
+In addition to the methods described above, the `PreDecoratorRequest` instance exposes an interface to modify the original request,
+ which will come forwarded by microservice-gateway to the target service. This interface is accessible using the Request instance method 
+ `changeOriginalRequest` which returns a builder for `PreDecoratorRequestProxy` object with following methods:
+
++ `setMethod(newMethod)` - modify the method of the original request
++ `setPath(newPath)` - modify the path of the original request
++ `setHeaders (newHeaders)` - modify the headers of the original request
++ `setQuery (newQuery)` - modify the querystring of the original request
++ `setBody(newBody)` - change the body of the original request
+
+To leave the original request unchanged, the `leaveOriginalRequestUnmodified` function can be used instead.
+
+##### Response
+Both the result of `changeOriginalRequest` building operation and the one of `leaveOriginalRequestUnmodified` call can be passed to static method
+ `DecoratorResponseFactory.makePreDecoratorResponse(PreDecoratorRequest preDecoratorRequest)`.
+This method returns an instance of `DecoratorResponse`, which represents the response that should be returned.
+
+##### Abort chain
+To abort the decorator chain, you can obtain the related `DecoratorResponse` instance by calling the method
+ `DecoratorResponseFactory.abortChain(int finalStatusCode, Object finalBody, Map<String, String> finalHeaders)`.

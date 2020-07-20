@@ -31,7 +31,7 @@ public class PreDecoratorRequest {
         return null;
     }
 
-    protected DecoratorRequest getOriginalRequest() {
+    public DecoratorRequest getRequest() {
         return DecoratorRequest.builder()
                 .method(this.method)
                 .path(this.path)
@@ -39,31 +39,25 @@ public class PreDecoratorRequest {
                 .query(this.query)
                 .body(this.body)
                 .build();
-    }
-
-    public Object getOriginalRequestBody() {
-        return this.getBody();
-    }
-
-    public Map<String, String> getOriginalRequestHeaders() {
-        return this.getHeaders();
-    }
-
-    public String getOriginalRequestMethod() {
-        return this.getMethod();
     }
 
     public String getOriginalRequestPath() {
         return this.getPath();
     }
 
-    public DecoratorRequest getResponseBody() {
-        return DecoratorRequest.builder()
-                .method(this.method)
-                .path(this.path)
-                .headers(this.headers)
-                .query(this.query)
-                .body(this.body)
-                .build();
+    public String getOriginalRequestMethod() {
+        return this.getMethod();
+    }
+
+    public Map<String, String> getOriginalRequestHeaders() {
+        return this.getHeaders();
+    }
+
+    public Map<String, String> getOriginalRequestQuery() {
+        return this.getQuery();
+    }
+
+    public Object getOriginalRequestBody() {
+        return this.getBody();
     }
 }

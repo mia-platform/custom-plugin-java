@@ -1,14 +1,22 @@
-package eu.miaplatform.decorators.postdecorators;
+package eu.miaplatform.decorators;
 
-import eu.miaplatform.decorators.AbortChainResponse;
-import eu.miaplatform.decorators.DecoratorResponse;
+import eu.miaplatform.decorators.postdecorators.*;
+import eu.miaplatform.decorators.predecorators.*;
 
 import java.util.Map;
 
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
 
-public class PostDecoratorResponseFactory {
-    public static DecoratorResponse makeResponse(PostDecoratorRequest postDecoratorRequest) {
+public class DecoratorResponseFactory {
+    public static DecoratorResponse makePreDecoratorResponse(PreDecoratorRequest preDecoratorRequest) {
+        if (preDecoratorRequest == null) {
+            return new LeaveOriginalRequestUnmodified();
+        } else {
+            return new ChangeOriginalRequest(preDecoratorRequest.getRequest());
+        }
+    }
+
+    public static DecoratorResponse makePostDecoratorResponse(PostDecoratorRequest postDecoratorRequest) {
         if (postDecoratorRequest == null) {
             return new LeaveOriginalResponseUnmodified();
         } else {
@@ -26,4 +34,3 @@ public class PostDecoratorResponseFactory {
         return new AbortChainResponse(body, finalHeaders);
     }
 }
-

@@ -25,8 +25,8 @@ public class PreDecoratorTest {
                 .setBody("{\"baz\":\"bam\"}")
                 .build();
 
-        assertNotEquals(preDecoratorRequest.getOriginalRequestBody(), updatedRequest.getOriginalRequest().getBody());
+        assertNotEquals(preDecoratorRequest.getOriginalRequestBody(), updatedRequest.getRequest().getBody());
         assertEquals(preDecoratorRequest.getOriginalRequestBody(), "{\"foo\":\"bar\"}");
-        assertEquals(updatedRequest.getOriginalRequest().getBody(), "{\"baz\":\"bam\"}");
+        assertEquals(updatedRequest.getRequest().getBody(), "{\"baz\":\"bam\"}");
     }
 }

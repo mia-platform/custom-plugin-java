@@ -12,11 +12,14 @@ public class PreDecoratorRequestProxy {
             this.request = originalRequest;
         }
 
-        public Builder setBody(Object body) {
-            this.request.setBody(body);
+        public Builder setMethod(String method) {
+            this.request.setMethod(method);
             return this;
         }
-
+        public Builder setPath(String path) {
+            this.request.setPath(path);
+            return this;
+        }
         public Builder setHeaders(Map<String, String> headers) {
             this.request.setHeaders(headers);
             return this;
@@ -24,6 +27,11 @@ public class PreDecoratorRequestProxy {
 
         public Builder setQuery(Map<String, String> query) {
             this.request.setQuery(query);
+            return this;
+        }
+
+        public Builder setBody(Object body) {
+            this.request.setBody(body);
             return this;
         }
 
