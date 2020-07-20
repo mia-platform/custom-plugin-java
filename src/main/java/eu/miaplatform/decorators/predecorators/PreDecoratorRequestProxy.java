@@ -28,7 +28,13 @@ public class PreDecoratorRequestProxy {
         }
 
         public PreDecoratorRequest build() {
-            return PreDecoratorRequest.builder().request(request).build();
+            return PreDecoratorRequest.builder()
+                    .method(request.getMethod())
+                    .path(request.getPath())
+                    .headers(request.getHeaders())
+                    .query(request.getQuery())
+                    .body(request.getBody())
+                    .build();
         }
     }
 

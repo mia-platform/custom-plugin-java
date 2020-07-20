@@ -10,16 +10,20 @@ import java.util.Map;
 @AllArgsConstructor
 @Data
 public class PreDecoratorRequest {
-    private DecoratorRequest request;
+    private String method;
+    private String path;
+    private Map<String, String> headers;
+    private Map<String, String> query;
+    private Object body;
 
     public PreDecoratorRequestProxy.Builder changeOriginalRequest() {
         return new PreDecoratorRequestProxy.Builder(
                 DecoratorRequest.builder()
-                        .method(this.request.getMethod())
-                        .path(this.request.getPath())
-                        .headers(this.request.getHeaders())
-                        .query(this.request.getQuery())
-                        .body(this.request.getBody())
+                        .method(this.getMethod())
+                        .path(this.getPath())
+                        .headers(this.getHeaders())
+                        .query(this.getQuery())
+                        .body(this.getBody())
                         .build());
     }
 
@@ -28,30 +32,38 @@ public class PreDecoratorRequest {
     }
 
     protected DecoratorRequest getOriginalRequest() {
-        return this.request;
+        return DecoratorRequest.builder()
+                .method(this.method)
+                .path(this.path)
+                .headers(this.headers)
+                .query(this.query)
+                .body(this.body)
+                .build();
     }
 
     public Object getOriginalRequestBody() {
-        return this.request.getBody();
+        return this.getBody();
     }
 
     public Map<String, String> getOriginalRequestHeaders() {
-        return this.request.getHeaders();
+        return this.getHeaders();
     }
 
     public String getOriginalRequestMethod() {
-        return this.request.getMethod();
+        return this.getMethod();
     }
 
     public String getOriginalRequestPath() {
-        return this.request.getPath();
+        return this.getPath();
     }
 
     public DecoratorRequest getResponseBody() {
-        return this.request;
-    }
-
-    public void setQuery(String path) {
-        this.request.setPath("foo");
+        return DecoratorRequest.builder()
+                .method(this.method)
+                .path(this.path)
+                .headers(this.headers)
+                .query(this.query)
+                .body(this.body)
+                .build();
     }
 }

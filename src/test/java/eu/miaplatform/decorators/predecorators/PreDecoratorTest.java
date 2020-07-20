@@ -9,7 +9,7 @@ public class PreDecoratorTest {
     @Test
     public void originalRequestUnmodified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().request(originalRequest).build();
+        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.leaveOriginalRequestUnmodified();
 
@@ -19,7 +19,7 @@ public class PreDecoratorTest {
     @Test
     public void originalRequestGetsModified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().request(originalRequest).build();
+        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.changeOriginalRequest()
                 .setBody("{\"baz\":\"bam\"}")
