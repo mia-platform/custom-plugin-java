@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PreDecoratorTest {
+public class PreDecoratorRequestTest {
     @Test
     public void originalRequestUnmodified() {
         DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
