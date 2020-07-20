@@ -35,18 +35,6 @@ public class PostDecoratorRequest {
         return null;
     }
 
-    protected DecoratorRequest getOriginalRequest() {
-        return this.request;
-    }
-
-    public Object getOriginalRequestBody() {
-        return this.request.getBody();
-    }
-
-    public Map<String, String> getOriginalRequestHeaders() {
-        return this.request.getHeaders();
-    }
-
     public String getOriginalRequestMethod() {
         return this.request.getMethod();
     }
@@ -55,8 +43,24 @@ public class PostDecoratorRequest {
         return this.request.getPath();
     }
 
+    public Map<String, String> getOriginalRequestHeaders() {
+        return this.request.getHeaders();
+    }
+
+    public Map<String, String> getOriginalRequestQuery() {
+        return this.request.getQuery();
+    }
+
+    public Object getOriginalRequestBody() {
+        return this.request.getBody();
+    }
+
     public DecoratorResponse getOriginalResponse() {
         return this.response;
+    }
+
+    public int getOriginalResponseStatusCode() {
+        return this.response.getStatusCode();
     }
 
     public Map<String, String> getOriginalResponseHeaders() {
@@ -65,13 +69,5 @@ public class PostDecoratorRequest {
 
     public Object getOriginalResponseBody() {
         return this.response.getBody();
-    }
-
-    public int getOriginalResponseStatusCode() {
-        return this.response.getStatusCode();
-    }
-
-    public DecoratorResponse getResponseBody() {
-        return this.response;
     }
 }

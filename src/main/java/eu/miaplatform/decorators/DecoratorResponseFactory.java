@@ -20,7 +20,7 @@ public class DecoratorResponseFactory {
         if (postDecoratorRequest == null) {
             return new LeaveOriginalResponseUnmodified();
         } else {
-            return new ChangeOriginalResponse(postDecoratorRequest.getResponseBody());
+            return new ChangeOriginalResponse(postDecoratorRequest.getResponse());
         }
     }
 
