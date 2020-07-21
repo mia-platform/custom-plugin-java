@@ -53,7 +53,7 @@ The utility functions exposed by the `PreDecoratorRequest` instance can be used 
 + `getOriginalRequestBody()` - returns the body of the original request
 
 In addition to the methods described above, the `PreDecoratorRequest` instance exposes an interface to modify the original request,
- which will come forwarded by microservice-gateway to the target service. This interface is accessible using the instance method 
+ which will come forwarded to the target service. This interface is accessible using the instance method 
  `changeOriginalRequest` which returns a builder for `PreDecoratorRequestProxy` object with following methods:
 
 + `setMethod(String newMethod)` - modify the method of the original request
