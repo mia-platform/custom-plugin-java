@@ -1,6 +1,8 @@
 package eu.miaplatform.decorators.postdecorators;
 
 import eu.miaplatform.decorators.*;
+import eu.miaplatform.service.EnvConfiguration;
+import eu.miaplatform.service.EnvConfigurationException;
 import lombok.*;
 
 import java.util.Map;
@@ -70,4 +72,36 @@ public class PostDecoratorRequest {
     public Object getOriginalResponseBody() {
         return this.response.getBody();
     }
+
+    public String getUserId() {
+        try  {
+            return this.request.getHeaders().get(EnvConfiguration.get("USERID_HEADER_KEY"));
+        } catch(EnvConfigurationException ex) {
+            return null;
+        }
+    }
+
+    public String getGroups() {
+        try  {
+            return this.request.getHeaders().get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
+        } catch(EnvConfigurationException ex) {
+            return null;
+        }
+    }
+    public String getClientType() {
+        try  {
+            return this.request.getHeaders().get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
+        } catch(EnvConfigurationException ex) {
+            return null;
+        }
+    }
+
+    public String isFromBackOffice() {
+        try  {
+            return this.request.getHeaders().get(EnvConfiguration.get("BACKOFFICE_HEADER_KEY"));
+        } catch(EnvConfigurationException ex) {
+            return null;
+        }
+    }
+
 }

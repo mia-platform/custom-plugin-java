@@ -25,7 +25,7 @@ public class EnvConfiguration {
         }
     }
 
-    public String get(String envVariable) throws EnvConfigurationException {
+    public static String get(String envVariable) throws EnvConfigurationException {
         String value = System.getenv(envVariable);
         if (value == null) {
             throw new EnvConfigurationException();
@@ -33,7 +33,7 @@ public class EnvConfiguration {
         return value;
     }
 
-    public String get(String envVariable, String defaultValue) {
+    public static String get(String envVariable, String defaultValue) {
         return System.getenv(envVariable) == null ? defaultValue : System.getenv(envVariable);
     }
 
@@ -41,7 +41,7 @@ public class EnvConfiguration {
         envVariables.put(envVariable, value);
     }
 
-    public String getAndRequire(String envVariable) {
+    public static String getAndRequire(String envVariable) {
         String value = System.getenv(envVariable);
         if (value == null || value.equals("")) {
             throw new IllegalArgumentException("Missing required environment variable: " + envVariable);
@@ -49,7 +49,7 @@ public class EnvConfiguration {
         return value;
     }
 
-    public int getInt(String envVariable) throws NumberFormatException, EnvConfigurationException {
+    public static int getInt(String envVariable) throws NumberFormatException, EnvConfigurationException {
         String value = System.getenv(envVariable);
         if (value == null) {
             throw new EnvConfigurationException();
@@ -57,12 +57,12 @@ public class EnvConfiguration {
         return Integer.parseInt(System.getenv(envVariable));
     }
 
-    public List<String> getStringList(String envVariable) {
+    public static List<String> getStringList(String envVariable) {
         String value = getAndRequire(envVariable);
         return Arrays.asList(value.split(LIST_SEPARATOR));
     }
 
-    public List<String> getAndRequireStringList(String envVariable) {
+    public static List<String> getAndRequireStringList(String envVariable) {
         List<String> values = getStringList(envVariable);
         if (values.size() == 0) {
             throw new IllegalArgumentException("Unexpected empty list for " + envVariable);
