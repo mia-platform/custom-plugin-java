@@ -1,9 +1,9 @@
-# custom-plugin-java
-Library that allows you to define Mia-Platform custom plugins in java easily
+# Mia service Java Library
+A library that allows you to define Mia-Platform custom services in Java easily.
 
 ## Purpose
 
-This plugin aims to provide an easy way to integrate the Platform.
+This library aims to provide an easy way to integrate the Platform.
 
 It is able to integrate either the CRUD and other REST services.
 The underlying library which enables the possibility to operate with external service is Retrofit, although the user (developer) wouldn't use this in his code. 
@@ -53,7 +53,7 @@ The utility functions exposed by the `PreDecoratorRequest` instance can be used 
 + `getOriginalRequestBody()` - returns the body of the original request
 
 In addition to the methods described above, the `PreDecoratorRequest` instance exposes an interface to modify the original request,
- which will come forwarded by microservice-gateway to the target service. This interface is accessible using the instance method 
+ which will come forward to the target service. This interface is accessible using the instance method 
  `changeOriginalRequest` which returns a builder for `PreDecoratorRequestProxy` object with following methods:
 
 + `setMethod(String newMethod)` - modify the method of the original request
@@ -62,7 +62,7 @@ In addition to the methods described above, the `PreDecoratorRequest` instance e
 + `setQuery (Map<String, String> newQuery)` - modify the querystring of the original request
 + `setBody(Object newBody)` - change the body of the original request
 
-To leave the original request unchanged, the `leaveOriginalRequestUnmodified` function can be used instead.
+To leave the original request unchanged, you can instead use `leaveOriginalRequestUnmodified` function.
 
 ##### Response
 Both the result of `changeOriginalRequest` building operation and the one of `leaveOriginalRequestUnmodified` call can be passed to static method
@@ -91,7 +91,7 @@ As with the original request, the `PostDecoratorResponse` instance has useful me
 + `getOriginalResponseStatusCode()` - returns the status code of the original response
 
 In addition to the methods described above, the `PostDecoratorResponse` instance exposes an interface to modify the original response,
- which will come forwarded by microservice-gateway to the target service. This interface is accessible using the instance method 
+ which will come forwarded to the original caller. This interface is accessible using the instance method 
  `changeOriginalResponse` which returns a builder for `PostDecoratorRequestProxy` object with following methods:
 
 + `setHeaders(Map<String, String> newHeaders)` - modify the headers of the original response

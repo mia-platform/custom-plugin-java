@@ -11,17 +11,16 @@ public class DecoratorResponseFactory {
     public static DecoratorResponse makePreDecoratorResponse(PreDecoratorRequest preDecoratorRequest) {
         if (preDecoratorRequest == null) {
             return new LeaveOriginalRequestUnmodified();
-        } else {
-            return new ChangeOriginalRequest(preDecoratorRequest.getRequest());
         }
+        return new ChangeOriginalRequest(preDecoratorRequest.getRequest());
+
     }
 
     public static DecoratorResponse makePostDecoratorResponse(PostDecoratorRequest postDecoratorRequest) {
         if (postDecoratorRequest == null) {
             return new LeaveOriginalResponseUnmodified();
-        } else {
-            return new ChangeOriginalResponse(postDecoratorRequest.getResponse());
         }
+        return new ChangeOriginalResponse(postDecoratorRequest.getResponse());
     }
 
     public static DecoratorResponse abortChain(int finalStatusCode) {
