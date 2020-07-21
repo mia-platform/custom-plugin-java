@@ -91,7 +91,7 @@ As with the original request, the `PostDecoratorResponse` instance has useful me
 + `getOriginalResponseStatusCode()` - returns the status code of the original response
 
 In addition to the methods described above, the `PostDecoratorResponse` instance exposes an interface to modify the original response,
- which will come forwarded by microservice-gateway to the target service. This interface is accessible using the instance method 
+ which will come forwarded to the original caller. This interface is accessible using the instance method 
  `changeOriginalResponse` which returns a builder for `PostDecoratorRequestProxy` object with following methods:
 
 + `setHeaders(Map<String, String> newHeaders)` - modify the headers of the original response
