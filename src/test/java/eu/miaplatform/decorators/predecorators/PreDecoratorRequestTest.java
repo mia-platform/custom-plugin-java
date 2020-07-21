@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 public class PreDecoratorRequestTest {
     @Test
     public void originalRequestUnmodified() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.leaveOriginalRequestUnmodified();
@@ -18,7 +17,6 @@ public class PreDecoratorRequestTest {
 
     @Test
     public void originalRequestGetsModified() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
         PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
 
         PreDecoratorRequest updatedRequest = preDecoratorRequest.changeOriginalRequest()
