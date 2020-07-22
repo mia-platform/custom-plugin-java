@@ -1,8 +1,7 @@
 package eu.miaplatform.decorators.predecorators;
 
 import eu.miaplatform.decorators.DecoratorRequest;
-import eu.miaplatform.service.EnvConfiguration;
-import eu.miaplatform.service.EnvConfigurationException;
+import eu.miaplatform.service.environment.EnvConfiguration;
 import lombok.*;
 
 import java.util.Map;
@@ -64,33 +63,18 @@ public class PreDecoratorRequest {
     }
 
     public String getUserId() {
-        try  {
-            return this.headers.get(EnvConfiguration.get("USERID_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.headers.get(EnvConfiguration.getInstance().get("USERID_HEADER_KEY"));
     }
 
     public String getGroups() {
-        try  {
-            return this.headers.get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.headers.get(EnvConfiguration.getInstance().get("GROUPS_HEADER_KEY"));
     }
+
     public String getClientType() {
-        try  {
-            return this.headers.get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.headers.get(EnvConfiguration.getInstance().get("GROUPS_HEADER_KEY"));
     }
 
     public String isFromBackOffice() {
-        try  {
-            return this.headers.get(EnvConfiguration.get("BACKOFFICE_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.headers.get(EnvConfiguration.getInstance().get("BACKOFFICE_HEADER_KEY"));
     }
 }

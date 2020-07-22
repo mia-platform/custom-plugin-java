@@ -1,7 +1,6 @@
 package eu.miaplatform.customplugin;
 
-import eu.miaplatform.service.EnvConfiguration;
-import eu.miaplatform.service.EnvConfigurationException;
+import eu.miaplatform.service.environment.EnvConfiguration;
 import eu.miaplatform.service.InitServiceOptions;
 import eu.miaplatform.service.Service;
 
@@ -30,13 +29,10 @@ public class ServiceClientFactory {
     }
 
     public static Service getServiceProxy(InitServiceOptions options) {
-        EnvConfiguration envConfiguration = new EnvConfiguration();
-        try {
-            String microserviceNameKey = envConfiguration.get(MICROSERVICE_GATEWAY_SERVICE_NAME_KEY);
-            return new Service(microserviceNameKey, options);
-        } catch (EnvConfigurationException ex) {
-            ex.printStackTrace();
+        String microserviceNameKey = EnvConfiguration.getInstance().get(MICROSERVICE_GATEWAY_SERVICE_NAME_KEY);
+        if (microserviceNameKey == null) {
             return null;
         }
+        return new Service(microserviceNameKey, options);
     }
 }

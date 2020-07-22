@@ -1,13 +1,10 @@
 package eu.miaplatform.decorators.postdecorators;
 
 import eu.miaplatform.decorators.*;
-import eu.miaplatform.service.EnvConfiguration;
-import eu.miaplatform.service.EnvConfigurationException;
+import eu.miaplatform.service.environment.EnvConfiguration;
 import lombok.*;
 
 import java.util.Map;
-
-import static eu.miaplatform.decorators.constants.DecoratorConstants.ABORT_CHAIN_STATUS_CODE;
 
 @Builder
 @AllArgsConstructor
@@ -74,34 +71,19 @@ public class PostDecoratorRequest {
     }
 
     public String getUserId() {
-        try  {
-            return this.request.getHeaders().get(EnvConfiguration.get("USERID_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.request.getHeaders().get(EnvConfiguration.getInstance().get("USERID_HEADER_KEY"));
     }
 
     public String getGroups() {
-        try  {
-            return this.request.getHeaders().get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.request.getHeaders().get(EnvConfiguration.getInstance().get("GROUPS_HEADER_KEY"));
     }
+
     public String getClientType() {
-        try  {
-            return this.request.getHeaders().get(EnvConfiguration.get("GROUPS_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.request.getHeaders().get(EnvConfiguration.getInstance().get("GROUPS_HEADER_KEY"));
     }
 
     public String isFromBackOffice() {
-        try  {
-            return this.request.getHeaders().get(EnvConfiguration.get("BACKOFFICE_HEADER_KEY"));
-        } catch(EnvConfigurationException ex) {
-            return null;
-        }
+        return this.request.getHeaders().get(EnvConfiguration.getInstance().get("BACKOFFICE_HEADER_KEY"));
     }
 
 }
