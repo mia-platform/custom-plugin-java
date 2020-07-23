@@ -54,7 +54,7 @@ public class EnvConfiguration {
 
     private static String getRequired(String envKey) throws InvalidEnvConfigurationException {
         String value = System.getenv(envKey);
-        if (value.isEmpty()) {
+        if (value != null && !value.isEmpty()) {
             throw new InvalidEnvConfigurationException("Required environment variable not found");
         }
         return value;
