@@ -8,8 +8,8 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DecoratorResponse {
+public class DecoratorResponse<U> {
     private int statusCode;
     private Map<String, String> headers;
-    private Object body;
+    private U body;
 }

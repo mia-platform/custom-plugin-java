@@ -5,8 +5,8 @@ import eu.miaplatform.decorators.DecoratorResponse;
 import static eu.miaplatform.decorators.constants.DecoratorConstants.CHANGE_ORIGINAL_STATUS_CODE;
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
 
-public class ChangeOriginalResponse extends DecoratorResponse {
-    public ChangeOriginalResponse(DecoratorResponse body) {
-        super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, body);
+public class ChangeOriginalResponse<U> extends DecoratorResponse<U> {
+    public ChangeOriginalResponse(DecoratorResponse<U> response) {
+        super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, response.getBody());
     }
 }

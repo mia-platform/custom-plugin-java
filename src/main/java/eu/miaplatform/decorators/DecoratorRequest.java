@@ -8,10 +8,10 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DecoratorRequest {
+public class DecoratorRequest<T> {
     private String method;
     private String path;
     private Map<String, String> headers;
     private Map<String, String> query;
-    private Object body;
+    private T body;
 }
