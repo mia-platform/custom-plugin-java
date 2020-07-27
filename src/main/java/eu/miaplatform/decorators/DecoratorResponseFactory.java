@@ -8,12 +8,11 @@ import java.util.Map;
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
 
 public class DecoratorResponseFactory {
-    public static <T, U> DecoratorResponse<U> makePreDecoratorResponse(PreDecoratorRequest<T> preDecoratorRequest) {
+    public static <U> DecoratorResponse<U> makePreDecoratorResponse(PreDecoratorRequest<U> preDecoratorRequest) {
         if (preDecoratorRequest == null) {
             return new LeaveOriginalRequestUnmodified<>();
         }
         return new ChangeOriginalRequest<>(preDecoratorRequest.getRequest());
-
     }
 
     public static <T, U> DecoratorResponse<U> makePostDecoratorResponse(PostDecoratorRequest<T, U> postDecoratorRequest) {
