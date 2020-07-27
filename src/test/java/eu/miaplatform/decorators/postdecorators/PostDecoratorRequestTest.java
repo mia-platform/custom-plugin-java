@@ -28,7 +28,7 @@ public class PostDecoratorRequestTest {
         SampleBody updatedBody = SampleBody.builder().foo("bar").bar(1).baz(false).build();
 
         DecoratorRequest<SampleBody> originalRequest = DecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(originalBody).build();
-        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(updatedBody).statusCode(200).build();
+        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(originalBody).statusCode(200).build();
 
         PostDecoratorRequest<SampleBody, SampleBody> postDecoratorRequest = PostDecoratorRequest.<SampleBody, SampleBody>builder()
                 .request(originalRequest)
@@ -40,7 +40,7 @@ public class PostDecoratorRequestTest {
                 .setBody(updatedBody)
                 .build();
 
-        assertNotEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getOriginalResponse().getBody());
+        assertNotEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getResponse().getBody());
         assertEquals(postDecoratorRequest.getOriginalResponseBody(), originalBody);
         assertEquals(updatedRequest.getOriginalResponse().getBody(), updatedBody);
         assertEquals(updatedRequest.getOriginalResponse().getStatusCode(), 204);
