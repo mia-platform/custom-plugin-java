@@ -9,9 +9,10 @@ import static org.junit.Assert.*;
 public class DecoratorResponseFactoryTest {
     @Test
     public void leaveOriginalRequestUnmodified() {
-        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        SampleBody sampleBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        PreDecoratorRequest<SampleBody> preDecoratorRequest = PreDecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(sampleBody).build();
 
-        DecoratorResponse response = DecoratorResponseFactory.makePreDecoratorResponse(preDecoratorRequest.leaveOriginalRequestUnmodified());
+        DecoratorResponse<SampleBody> response = DecoratorResponseFactory.makePreDecoratorResponse(preDecoratorRequest.leaveOriginalRequestUnmodified());
 
         assertEquals(response.getStatusCode(), 204);
         assertNotNull(response.getHeaders().get("Content-Type"));
@@ -21,9 +22,10 @@ public class DecoratorResponseFactoryTest {
 
     @Test
     public void changeOriginalRequest() {
-        PreDecoratorRequest preDecoratorRequest = PreDecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
+        SampleBody sampleBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        PreDecoratorRequest<SampleBody> preDecoratorRequest = PreDecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(sampleBody).build();
 
-        DecoratorResponse response = DecoratorResponseFactory.makePreDecoratorResponse(preDecoratorRequest);
+        DecoratorResponse<SampleBody> response = DecoratorResponseFactory.makePreDecoratorResponse(preDecoratorRequest);
 
         assertEquals(response.getStatusCode(), 200);
         assertNotNull(response.getHeaders().get("Content-Type"));
@@ -32,14 +34,15 @@ public class DecoratorResponseFactoryTest {
 
     @Test
     public void leaveOriginalResponseUnmodified() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
+        SampleBody sampleBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        DecoratorRequest<SampleBody> originalRequest = DecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(sampleBody).build();
+        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(sampleBody).statusCode(200).build();
 
-        PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
+        PostDecoratorRequest<SampleBody, SampleBody> postDecoratorRequest = PostDecoratorRequest.<SampleBody, SampleBody>builder()
                 .request(originalRequest)
                 .response(originalResponse)
                 .build();
-        DecoratorResponse response = DecoratorResponseFactory.makePostDecoratorResponse(postDecoratorRequest.leaveOriginalResponseUnmodified());
+        DecoratorResponse<SampleBody> response = DecoratorResponseFactory.makePostDecoratorResponse(postDecoratorRequest.leaveOriginalResponseUnmodified());
 
         assertEquals(response.getStatusCode(), 204);
         assertNotNull(response.getHeaders().get("Content-Type"));
@@ -49,14 +52,15 @@ public class DecoratorResponseFactoryTest {
 
     @Test
     public void changeOriginalResponse() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
+        SampleBody sampleBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        DecoratorRequest<SampleBody> originalRequest = DecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(sampleBody).build();
+        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(sampleBody).statusCode(200).build();
 
-        PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
+        PostDecoratorRequest<SampleBody, SampleBody> postDecoratorRequest = PostDecoratorRequest.<SampleBody, SampleBody>builder()
                 .request(originalRequest)
                 .response(originalResponse)
                 .build();
-        DecoratorResponse response = DecoratorResponseFactory.makePostDecoratorResponse(postDecoratorRequest);
+        DecoratorResponse<SampleBody> response = DecoratorResponseFactory.makePostDecoratorResponse(postDecoratorRequest);
 
         assertEquals(response.getStatusCode(), 200);
         assertNotNull(response.getHeaders().get("Content-Type"));
@@ -65,7 +69,7 @@ public class DecoratorResponseFactoryTest {
 
     @Test
     public void abortChain() {
-        DecoratorResponse response = DecoratorResponseFactory.abortChain(404);
+        DecoratorResponse<SampleBody> response = DecoratorResponseFactory.abortChain(404);
 
         assertEquals(response.getStatusCode(), 418);
         assertNotNull(response.getHeaders().get("Content-Type"));

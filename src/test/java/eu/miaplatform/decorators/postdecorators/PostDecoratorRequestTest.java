@@ -1,7 +1,6 @@
 package eu.miaplatform.decorators.postdecorators;
 
-import eu.miaplatform.decorators.DecoratorRequest;
-import eu.miaplatform.decorators.DecoratorResponse;
+import eu.miaplatform.decorators.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,37 +8,41 @@ import static org.junit.Assert.*;
 public class PostDecoratorRequestTest {
     @Test
     public void originalResponseUnmodified() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"})").statusCode(200).build();
+        SampleBody sampleBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        DecoratorRequest<SampleBody> originalRequest = DecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(sampleBody).build();
+        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(sampleBody).statusCode(200).build();
 
-        PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
+        PostDecoratorRequest<SampleBody, SampleBody> postDecoratorRequest = PostDecoratorRequest.<SampleBody, SampleBody>builder()
                 .request(originalRequest)
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.leaveOriginalResponseUnmodified();
+        PostDecoratorRequest<SampleBody, SampleBody> updatedRequest = postDecoratorRequest.leaveOriginalResponseUnmodified();
 
         assertNull(updatedRequest);
     }
 
     @Test
     public void originalResponseGetsModified() {
-        DecoratorRequest originalRequest = DecoratorRequest.builder().method("GET").path("/test").body("{\"foo\":\"bar\"}").build();
-        DecoratorResponse originalResponse = DecoratorResponse.builder().body("{\"bar\":\"baz\"}").statusCode(200).build();
+        SampleBody originalBody = SampleBody.builder().foo("foo").bar(42).baz(true).build();
+        SampleBody updatedBody = SampleBody.builder().foo("bar").bar(1).baz(false).build();
 
-        PostDecoratorRequest postDecoratorRequest = PostDecoratorRequest.builder()
+        DecoratorRequest<SampleBody> originalRequest = DecoratorRequest.<SampleBody>builder().method("GET").path("/test").body(originalBody).build();
+        DecoratorResponse<SampleBody> originalResponse = DecoratorResponse.<SampleBody>builder().body(updatedBody).statusCode(200).build();
+
+        PostDecoratorRequest<SampleBody, SampleBody> postDecoratorRequest = PostDecoratorRequest.<SampleBody, SampleBody>builder()
                 .request(originalRequest)
                 .response(originalResponse)
                 .build();
 
-        PostDecoratorRequest updatedRequest = postDecoratorRequest.changeOriginalResponse()
+        PostDecoratorRequest<SampleBody, SampleBody> updatedRequest = postDecoratorRequest.changeOriginalResponse()
                 .setStatusCode(204)
-                .setBody("{\"a\":\"42\"}")
+                .setBody(updatedBody)
                 .build();
 
         assertNotEquals(postDecoratorRequest.getOriginalResponseBody(), updatedRequest.getOriginalResponse().getBody());
-        assertEquals(postDecoratorRequest.getOriginalResponseBody(), "{\"bar\":\"baz\"}");
-        assertEquals(updatedRequest.getOriginalResponse().getBody(), "{\"a\":\"42\"}");
+        assertEquals(postDecoratorRequest.getOriginalResponseBody(), originalBody);
+        assertEquals(updatedRequest.getOriginalResponse().getBody(), updatedBody);
         assertEquals(updatedRequest.getOriginalResponse().getStatusCode(), 204);
     }
 }
