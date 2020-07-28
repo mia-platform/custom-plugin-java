@@ -6,8 +6,9 @@ import eu.miaplatform.decorators.DecoratorResponse;
 import static eu.miaplatform.decorators.constants.DecoratorConstants.CHANGE_ORIGINAL_STATUS_CODE;
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
 
-public class ChangeOriginalRequest<U> extends DecoratorResponse<U> {
-    public ChangeOriginalRequest(DecoratorRequest<U> request) {
-        super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, request.getBody());
+public class ChangeOriginalRequest<T, U> extends DecoratorResponse<U> {
+    public ChangeOriginalRequest(DecoratorRequest<T> request) {
+        //FIXME usare il tipo generico corretto
+        super(CHANGE_ORIGINAL_STATUS_CODE, DEFAULT_HEADERS, (U) request.getBody());
     }
 }
