@@ -2,6 +2,7 @@ package eu.miaplatform.decorators.predecorators;
 
 import eu.miaplatform.decorators.DecoratorRequest;
 
+import java.io.Serializable;
 import java.util.Map;
 
 public class PreDecoratorRequestProxy {
@@ -30,7 +31,7 @@ public class PreDecoratorRequestProxy {
             return this;
         }
 
-        public Builder setBody(Object body) {
+        public Builder setBody(Serializable body) {
             this.request.setBody(body);
             return this;
         }

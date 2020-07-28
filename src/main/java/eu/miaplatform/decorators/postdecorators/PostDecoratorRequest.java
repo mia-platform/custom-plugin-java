@@ -4,6 +4,7 @@ import eu.miaplatform.decorators.*;
 import eu.miaplatform.service.environment.EnvConfiguration;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Builder
@@ -50,7 +51,7 @@ public class PostDecoratorRequest {
         return this.request.getQuery();
     }
 
-    public Object getOriginalRequestBody() {
+    public Serializable getOriginalRequestBody() {
         return this.request.getBody();
     }
 
@@ -66,7 +67,7 @@ public class PostDecoratorRequest {
         return this.response.getHeaders();
     }
 
-    public Object getOriginalResponseBody() {
+    public Serializable getOriginalResponseBody() {
         return this.response.getBody();
     }
 

@@ -3,6 +3,7 @@ package eu.miaplatform.decorators;
 import eu.miaplatform.decorators.postdecorators.*;
 import eu.miaplatform.decorators.predecorators.*;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import static eu.miaplatform.decorators.constants.DecoratorConstants.DEFAULT_HEADERS;
@@ -28,7 +29,7 @@ public class DecoratorResponseFactory {
         return new AbortChainResponse(body, DEFAULT_HEADERS);
     }
 
-    public static DecoratorResponse abortChain(int finalStatusCode, Object finalBody, Map<String, String> finalHeaders) {
+    public static DecoratorResponse abortChain(int finalStatusCode, Serializable finalBody, Map<String, String> finalHeaders) {
         DecoratorResponse body = DecoratorResponse.builder().statusCode(finalStatusCode).body(finalBody).build();
         return new AbortChainResponse(body, finalHeaders);
     }

@@ -4,6 +4,7 @@ import eu.miaplatform.decorators.DecoratorRequest;
 import eu.miaplatform.service.environment.EnvConfiguration;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Map;
 
 @Builder
@@ -15,7 +16,7 @@ public class PreDecoratorRequest {
     private String path;
     private Map<String, String> headers;
     private Map<String, String> query;
-    private Object body;
+    private Serializable body;
 
     public PreDecoratorRequestProxy.Builder changeOriginalRequest() {
         return new PreDecoratorRequestProxy.Builder(
@@ -58,7 +59,7 @@ public class PreDecoratorRequest {
         return this.getQuery();
     }
 
-    public Object getOriginalRequestBody() {
+    public Serializable getOriginalRequestBody() {
         return this.getBody();
     }
 

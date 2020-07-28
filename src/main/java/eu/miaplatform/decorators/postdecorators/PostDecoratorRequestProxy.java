@@ -3,6 +3,7 @@ package eu.miaplatform.decorators.postdecorators;
 import eu.miaplatform.decorators.DecoratorRequest;
 import eu.miaplatform.decorators.DecoratorResponse;
 
+import java.io.Serializable;
 import java.util.Map;
 
 public class PostDecoratorRequestProxy {
@@ -15,7 +16,7 @@ public class PostDecoratorRequestProxy {
             this.response = originalResponse;
         }
 
-        public Builder setBody(Object body) {
+        public Builder setBody(Serializable body) {
             this.response.setBody(body);
             return this;
         }
