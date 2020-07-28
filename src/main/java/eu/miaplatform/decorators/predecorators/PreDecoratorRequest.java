@@ -10,16 +10,16 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PreDecoratorRequest<T> {
+public class PreDecoratorRequest {
     private String method;
     private String path;
     private Map<String, String> headers;
     private Map<String, String> query;
-    private T body;
+    private Object body;
 
-    public PreDecoratorRequestProxy.Builder<T> changeOriginalRequest() {
-        return new PreDecoratorRequestProxy.Builder<T>(
-                DecoratorRequest.<T>builder()
+    public PreDecoratorRequestProxy.Builder changeOriginalRequest() {
+        return new PreDecoratorRequestProxy.Builder(
+                DecoratorRequest.builder()
                         .method(this.getMethod())
                         .path(this.getPath())
                         .headers(this.getHeaders())
@@ -28,12 +28,12 @@ public class PreDecoratorRequest<T> {
                         .build());
     }
 
-    public PreDecoratorRequest<T> leaveOriginalRequestUnmodified() {
+    public PreDecoratorRequest leaveOriginalRequestUnmodified() {
         return null;
     }
 
-    public DecoratorRequest<T> getRequest() {
-        return DecoratorRequest.<T>builder()
+    public DecoratorRequest getRequest() {
+        return DecoratorRequest.builder()
                 .method(this.method)
                 .path(this.path)
                 .headers(this.headers)
@@ -58,7 +58,7 @@ public class PreDecoratorRequest<T> {
         return this.getQuery();
     }
 
-    public T getOriginalRequestBody() {
+    public Object getOriginalRequestBody() {
         return this.getBody();
     }
 

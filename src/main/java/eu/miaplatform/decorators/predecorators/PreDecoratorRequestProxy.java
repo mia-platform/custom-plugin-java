@@ -5,38 +5,38 @@ import eu.miaplatform.decorators.DecoratorRequest;
 import java.util.Map;
 
 public class PreDecoratorRequestProxy {
-    public static class Builder<T> {
-        private final DecoratorRequest<T> request;
+    public static class Builder {
+        private final DecoratorRequest request;
 
-        public Builder(DecoratorRequest<T> originalRequest) {
+        public Builder(DecoratorRequest originalRequest) {
             this.request = originalRequest;
         }
 
-        public Builder<T> setMethod(String method) {
+        public Builder setMethod(String method) {
             this.request.setMethod(method);
             return this;
         }
-        public Builder<T> setPath(String path) {
+        public Builder setPath(String path) {
             this.request.setPath(path);
             return this;
         }
-        public Builder<T> setHeaders(Map<String, String> headers) {
+        public Builder setHeaders(Map<String, String> headers) {
             this.request.setHeaders(headers);
             return this;
         }
 
-        public Builder<T> setQuery(Map<String, String> query) {
+        public Builder setQuery(Map<String, String> query) {
             this.request.setQuery(query);
             return this;
         }
 
-        public Builder<T> setBody(T body) {
+        public Builder setBody(Object body) {
             this.request.setBody(body);
             return this;
         }
 
-        public PreDecoratorRequest<T> build() {
-            return PreDecoratorRequest.<T>builder()
+        public PreDecoratorRequest build() {
+            return PreDecoratorRequest.builder()
                     .method(request.getMethod())
                     .path(request.getPath())
                     .headers(request.getHeaders())

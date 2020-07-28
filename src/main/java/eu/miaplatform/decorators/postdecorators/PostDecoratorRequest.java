@@ -10,27 +10,27 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PostDecoratorRequest<T, U> {
-    private DecoratorRequest<T> request;
-    private DecoratorResponse<U> response;
+public class PostDecoratorRequest {
+    private DecoratorRequest request;
+    private DecoratorResponse response;
 
-    public PostDecoratorRequestProxy.Builder<T, U> changeOriginalResponse() {
-        return new PostDecoratorRequestProxy.Builder<T, U>(
-                DecoratorRequest.<T>builder()
+    public PostDecoratorRequestProxy.Builder changeOriginalResponse() {
+        return new PostDecoratorRequestProxy.Builder(
+                DecoratorRequest.builder()
                         .method(this.request.getMethod())
                         .path(this.request.getPath())
                         .headers(this.request.getHeaders())
                         .query(this.request.getQuery())
-                        .body(this.request.getBody())
+                        .body(this.request.getBody  ())
                         .build(),
-                DecoratorResponse.<U>builder()
+                DecoratorResponse.builder()
                         .statusCode(this.response.getStatusCode())
                         .headers(this.response.getHeaders())
                         .body(this.response.getBody())
                         .build());
     }
 
-    public PostDecoratorRequest<T, U> leaveOriginalResponseUnmodified() {
+    public PostDecoratorRequest leaveOriginalResponseUnmodified() {
         return null;
     }
 
@@ -50,11 +50,11 @@ public class PostDecoratorRequest<T, U> {
         return this.request.getQuery();
     }
 
-    public T getOriginalRequestBody() {
+    public Object getOriginalRequestBody() {
         return this.request.getBody();
     }
 
-    public DecoratorResponse<U> getOriginalResponse() {
+    public DecoratorResponse getOriginalResponse() {
         return this.response;
     }
 
@@ -66,7 +66,7 @@ public class PostDecoratorRequest<T, U> {
         return this.response.getHeaders();
     }
 
-    public U getOriginalResponseBody() {
+    public Object getOriginalResponseBody() {
         return this.response.getBody();
     }
 

@@ -22,7 +22,6 @@ public class EnvConfiguration {
     }
 
     public static void parseEnvironment(EnvVariable[] schema) throws InvalidEnvConfigurationException {
-        envConfigurationInstance = new EnvConfiguration();
         Map<String, String> envVariables = customPluginRequiredVariables();
         for (EnvVariable envVariable : schema) {
             if (System.getenv(envVariable.getKey()) == null) {
@@ -39,7 +38,6 @@ public class EnvConfiguration {
     }
 
     public static void parseEnvironment() throws InvalidEnvConfigurationException {
-        envConfigurationInstance = new EnvConfiguration();
         Map<String, String> envVariables = customPluginRequiredVariables();
         envConfigurationInstance.setEnvVariables(envVariables);
     }
