@@ -60,7 +60,7 @@ In addition to the methods described above, the `PreDecoratorRequest` instance e
 + `setPath(String newPath)` - modify the path of the original request
 + `setHeaders(Map<String, String> newHeaders)` - modify the headers of the original request
 + `setQuery (Map<String, String> newQuery)` - modify the querystring of the original request
-+ `setBody(Object newBody)` - change the body of the original request
++ `setBody(Serializable newBody)` - change the body of the original request
 
 To leave the original request unchanged, you can instead use `leaveOriginalRequestUnmodified` function.
 
@@ -71,15 +71,14 @@ This method returns an instance of `DecoratorResponse`, which represents the res
 
 ##### Abort chain
 To abort the decorator chain, you can obtain the related `DecoratorResponse` instance by calling the method
- `DecoratorResponseFactory.abortChain(int finalStatusCode, Object finalBody, Map<String, String> finalHeaders)`.
+ `DecoratorResponseFactory.abortChain(int finalStatusCode, Serializable finalBody, Map<String, String> finalHeaders)`.
 
 
 #### POST decorators
 ##### Request
 An instance of class `PostDecoratorRequest` can be used as input to the decorator handler.
 
-The utility functions exposed by the `PostDecoratorRequest` instance can be used to access the original request:
-As with the original request, the `PostDecoratorResponse` instance has useful methods for access both the original request and the original response:
+The utility functions exposed by the `PostDecoratorRequest` instance can be used to access both the original request and the original response:
 
 + `getOriginalRequestMethod()` - returns the original request method
 + `getOriginalRequestPath()` - returns the path of the original request
@@ -90,12 +89,12 @@ As with the original request, the `PostDecoratorResponse` instance has useful me
 + `getOriginalResponseHeaders()` - returns the headers of the original response
 + `getOriginalResponseStatusCode()` - returns the status code of the original response
 
-In addition to the methods described above, the `PostDecoratorResponse` instance exposes an interface to modify the original response,
+In addition to the methods described above, the `PostDecoratorRequest` instance exposes an interface to modify the original response,
  which will come forwarded to the original caller. This interface is accessible using the instance method 
  `changeOriginalResponse` which returns a builder for `PostDecoratorRequestProxy` object with following methods:
 
 + `setHeaders(Map<String, String> newHeaders)` - modify the headers of the original response
-+ `setBody(Object newBody)` - change the body of the original response
++ `setBody(Serializable newBody)` - change the body of the original response
 + `setStatusCode(int statusCode)` - change the status code of the original response
 
 To leave the original response unchanged, the `leaveOriginalResponseUnmodified` function can be used instead.
@@ -107,4 +106,4 @@ This method returns an instance of `DecoratorResponse`, which represents the res
 
 ##### Abort chain
 To abort the decorator chain, you can obtain the related `DecoratorResponse` instance by calling the method
- `DecoratorResponseFactory.abortChain(int finalStatusCode, Object finalBody, Map<String, String> finalHeaders)`.
+ `DecoratorResponseFactory.abortChain(int finalStatusCode, Serializable finalBody, Map<String, String> finalHeaders)`.

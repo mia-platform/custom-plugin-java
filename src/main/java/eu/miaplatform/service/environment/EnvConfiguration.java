@@ -24,14 +24,17 @@ public class EnvConfiguration {
     public static void parseEnvironment(EnvVariable[] schema) throws InvalidEnvConfigurationException {
         Map<String, String> envVariables = customPluginRequiredVariables();
         for (EnvVariable envVariable : schema) {
-            if (System.getenv(envVariable.getKey()) == null) {
-                if (envVariable.isRequired()) {
-                    throw new InvalidEnvConfigurationException("Required environment variable not found");
-                } else if (envVariable.getDefaultValue() != null) {
-                    envVariables.put(envVariable.getKey(), envVariable.getDefaultValue());
-                }
-            } else {
+            if (System.getenv(envVariable.getKey()) != null) {
                 envVariables.put(envVariable.getKey(), System.getenv(envVariable.getKey()));
+                continue;
+            }
+
+            if (envVariable.isRequired()) {
+                throw new InvalidEnvConfigurationException("Required environment variable not found");
+            }
+
+            if (envVariable.getDefaultValue() != null) {
+                envVariables.put(envVariable.getKey(), envVariable.getDefaultValue());
             }
         }
         envConfigurationInstance.setEnvVariables(envVariables);
