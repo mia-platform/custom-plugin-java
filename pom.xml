@@ -9,8 +9,8 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Custom Plugin Java Library</name>
-    <description>Library that allows you to define Mia-Platform custom plugins in java easily</description>
+    <name>Mia Service Java Library</name>
+    <description>Mia Service Java Library allows you to define Mia-Platform custom microservices easily</description>
     <url>https://github.com/mia-platform/custom-plugin-java.git</url>
     <developers>
         <developer>
