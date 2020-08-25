@@ -16,7 +16,7 @@ public class EnvConfiguration {
     public static EnvConfiguration getInstance()
     {
         if (envConfigurationInstance == null) {
-            return new EnvConfiguration();
+            envConfigurationInstance = new EnvConfiguration();
         }
         return envConfigurationInstance;
     }
@@ -37,12 +37,12 @@ public class EnvConfiguration {
                 envVariables.put(envVariable.getKey(), envVariable.getDefaultValue());
             }
         }
-        envConfigurationInstance.setEnvVariables(envVariables);
+        getInstance().setEnvVariables(envVariables);
     }
 
     public static void parseEnvironment() throws InvalidEnvConfigurationException {
         Map<String, String> envVariables = customPluginRequiredVariables();
-        envConfigurationInstance.setEnvVariables(envVariables);
+        getInstance().setEnvVariables(envVariables);
     }
 
     private static Map<String, String> customPluginRequiredVariables() throws InvalidEnvConfigurationException {
