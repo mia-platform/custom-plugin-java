@@ -1,4 +1,5 @@
 package eu.miaplatform.service.environment;
+import com.github.stefanbirkner.systemlambda.Statement;
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 
@@ -18,21 +19,21 @@ public class EnvConfigurationTest {
     }
 
     @Test
-    public void parseEnvironmentWithDefaultVariables() throws Exception {
+    public void singletonTestWithDefaultVariables() throws Exception {
         withEnvironmentVariable("USERID_HEADER_KEY", "USERID_HEADER_VAL")
                 .and("GROUPS_HEADER_KEY", "GROUPS_HEADER_VAL")
                 .and("CLIENTTYPE_HEADER_KEY", "CLIENTTYPE_HEADER_VAL")
                 .and("BACKOFFICE_HEADER_KEY", "BACKOFFICE_HEADER_VAL")
                 .and("MICROSERVICE_GATEWAY_SERVICE_NAME", "MICROSERVICE_GATEWAY_SERVICE_NAME")
-                .execute(() -> {
-                    EnvConfiguration.parseEnvironment();
-                    Map<String, String> envVariables = EnvConfiguration.getInstance().getEnvVariables();
-                    assertEquals(envVariables.size(), 5);
-                    for (Map.Entry<String, String> entry : envVariables.entrySet()) {
-                        assertNotNull(entry.getKey());
-                        assertNotNull(entry.getValue());
-                    }
-                });
+                .execute((Statement) EnvConfiguration::parseEnvironment);
+        EnvConfiguration newEnvConfiguration = EnvConfiguration.getInstance();
+        Map<String, String> envVariables = newEnvConfiguration.getEnvVariables();
+        assertSame(envVariables.size(), 5);
+        assertEquals(envVariables.get("USERID_HEADER_KEY"), "USERID_HEADER_VAL");
+        assertEquals(envVariables.get("GROUPS_HEADER_KEY"), "GROUPS_HEADER_VAL");
+        assertEquals(envVariables.get("CLIENTTYPE_HEADER_KEY"), "CLIENTTYPE_HEADER_VAL");
+        assertEquals(envVariables.get("BACKOFFICE_HEADER_KEY"), "BACKOFFICE_HEADER_VAL");
+        assertEquals(envVariables.get("MICROSERVICE_GATEWAY_SERVICE_NAME"), "MICROSERVICE_GATEWAY_SERVICE_NAME");
     }
 
     @Test
@@ -50,7 +51,7 @@ public class EnvConfigurationTest {
     @Test
     public void parseEnvironmentWithAdditionalVariables() throws Exception {
         withEnvironmentVariable("USERID_HEADER_KEY", "USERID_HEADER_VAL")
-                .and("GROUPS_HEADER_KEY", "GROUPS_HEADER_VALUE")
+                .and("GROUPS_HEADER_KEY", "GROUPS_HEADER_VAL")
                 .and("CLIENTTYPE_HEADER_KEY", "CLIENTTYPE_HEADER_VAL")
                 .and("BACKOFFICE_HEADER_KEY", "BACKOFFICE_HEADER_VAL")
                 .and("MICROSERVICE_GATEWAY_SERVICE_NAME", "MICROSERVICE_GATEWAY_SERVICE_NAME")
@@ -61,11 +62,14 @@ public class EnvConfigurationTest {
                     schema[1] = new EnvVariable("bar", false);
                     EnvConfiguration.parseEnvironment(schema);
                     Map<String, String> envVariables = EnvConfiguration.getInstance().getEnvVariables();
-                    assertEquals(envVariables.size(), 6);
-                    for (Map.Entry<String, String> entry : envVariables.entrySet()) {
-                        assertNotNull(entry.getKey());
-                        assertNotNull(entry.getValue());
-                    }
+                    assertSame(envVariables.size(), 6);
+                    assertEquals(envVariables.get("USERID_HEADER_KEY"), "USERID_HEADER_VAL");
+                    assertEquals(envVariables.get("GROUPS_HEADER_KEY"), "GROUPS_HEADER_VAL");
+                    assertEquals(envVariables.get("CLIENTTYPE_HEADER_KEY"), "CLIENTTYPE_HEADER_VAL");
+                    assertEquals(envVariables.get("BACKOFFICE_HEADER_KEY"), "BACKOFFICE_HEADER_VAL");
+                    assertEquals(envVariables.get("MICROSERVICE_GATEWAY_SERVICE_NAME"), "MICROSERVICE_GATEWAY_SERVICE_NAME");
+                    assertEquals(envVariables.get("foo"), "foovalue");
+                    assertNull(envVariables.get("bar"));
                 });
     }
 
@@ -84,11 +88,14 @@ public class EnvConfigurationTest {
                     schema[1] = new EnvVariable("bar", false);
                     EnvConfiguration.parseEnvironment(schema);
                     Map<String, String> envVariables = EnvConfiguration.getInstance().getEnvVariables();
-                    assertEquals(envVariables.size(), 7);
-                    for (Map.Entry<String, String> entry : envVariables.entrySet()) {
-                        assertNotNull(entry.getKey());
-                        assertNotNull(entry.getValue());
-                    }
+                    assertSame(envVariables.size(), 7);
+                    assertEquals(envVariables.get("USERID_HEADER_KEY"), "USERID_HEADER_VAL");
+                    assertEquals(envVariables.get("GROUPS_HEADER_KEY"), "GROUPS_HEADER_VAL");
+                    assertEquals(envVariables.get("CLIENTTYPE_HEADER_KEY"), "CLIENTTYPE_HEADER_VAL");
+                    assertEquals(envVariables.get("BACKOFFICE_HEADER_KEY"), "BACKOFFICE_HEADER_VAL");
+                    assertEquals(envVariables.get("MICROSERVICE_GATEWAY_SERVICE_NAME"), "MICROSERVICE_GATEWAY_SERVICE_NAME");
+                    assertEquals(envVariables.get("foo"), "foovalue");
+                    assertEquals(envVariables.get("bar"), "barvalue");
                 });
     }
 
