@@ -47,6 +47,7 @@
     <properties>
         <kotlin.version>1.3.10</kotlin.version>
         <java.version>1.8</java.version>
+        <dokka.version>1.4.0</dokka.version>
         <src.dir>src/main/java</src.dir>
         <test.src.dir>src/test/java</test.src.dir>
     </properties>
@@ -67,22 +68,24 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>dokka</goal>
+                            <goal>javadoc</goal>
+                            <goal>javadocJar</goal>
                         </goals>
-                        <configuration>
-                            <sourceFileIncludes>
-                                <include>**/*.kt</include>
-                            </sourceFileIncludes>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <includes>
+                        <file>packages.md</file>
+                    </includes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -267,5 +270,14 @@
             <version>1.1.0</version>
         </dependency>
     </dependencies>
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
