@@ -3,7 +3,9 @@ package eu.miaplatform.service;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import okhttp3.Response;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -16,7 +18,7 @@ public class ServiceTest {
     public WireMockRule wireMockRule = new WireMockRule(3000);
 
     private Service service;
-    private final String url = "/test";
+    private final String path = "/test";
 
     @Before
     public void setup() {
@@ -26,205 +28,205 @@ public class ServiceTest {
     @Test
     public void testGet() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
-        stubFor(WireMock.get(urlPathEqualTo(url))
+        stubFor(WireMock.get(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", "id=1", new ServiceOptions());
+        Response response = service.get(path, "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(getRequestedFor(urlPathEqualTo(url))
+        verify(getRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
     public void testGetNullOptions() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
-        stubFor(WireMock.get(urlPathEqualTo(url))
+        stubFor(WireMock.get(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", "id=1", null);
+        Response response = service.get(path, "id=1", null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(getRequestedFor(urlPathEqualTo(url))
+        verify(getRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
     public void testGetNullQuery() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
-        stubFor(WireMock.get(urlPathEqualTo(url))
+        stubFor(WireMock.get(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", null, new ServiceOptions());
+        Response response = service.get(path, null, new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(getRequestedFor(urlPathEqualTo(url)));
+        verify(getRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testGetNullQueryAndOptions() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
-        stubFor(WireMock.get(urlPathEqualTo(url))
+        stubFor(WireMock.get(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.get("test", null, null);
+        Response response = service.get(path, null, null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(getRequestedFor(urlPathEqualTo(url)));
+        verify(getRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testPost() throws IOException {
         String requestBody = "{\"foo\":\"bar\"}";
-        stubFor(WireMock.post(urlPathEqualTo(url))
+        stubFor(WireMock.post(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.post("test", requestBody, "", new ServiceOptions());
+        Response response = service.post(path, requestBody, "", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(postRequestedFor(urlPathEqualTo(url)));
+        verify(postRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testPostNullQuery() throws IOException {
         String requestBody = "{\"foo\":\"bar\"}";
-        stubFor(WireMock.post(urlPathEqualTo(url))
+        stubFor(WireMock.post(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.post("test", requestBody, null, new ServiceOptions());
+        Response response = service.post(path, requestBody, null, new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(postRequestedFor(urlPathEqualTo(url)));
+        verify(postRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testPut() throws IOException {
         String requestBody = "{\"foo\":\"bar\"}";
-        stubFor(WireMock.put(urlPathEqualTo(url))
+        stubFor(WireMock.put(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.put("test", requestBody, "id=1", new ServiceOptions());
+        Response response = service.put(path, requestBody, "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(putRequestedFor(urlPathEqualTo(url))
+        verify(putRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
     public void testPutNullOptions() throws IOException {
         String requestBody = "{\"foo\":\"bar\"}";
-        stubFor(WireMock.put(urlPathEqualTo(url))
+        stubFor(WireMock.put(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.put("test", requestBody, "id=1", null);
+        Response response = service.put(path, requestBody, "id=1", null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(putRequestedFor(urlPathEqualTo(url))
+        verify(putRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
     public void testPutNullQuery() throws IOException {
         String requestBody = "{\"foo\":\"bar\"}";
-        stubFor(WireMock.put(urlPathEqualTo(url))
+        stubFor(WireMock.put(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.put("test", requestBody, null, new ServiceOptions());
+        Response response = service.put(path, requestBody, null, new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(putRequestedFor(urlPathEqualTo(url)));
+        verify(putRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testPatch() throws IOException {
         String requestBody = "{\"$set\":{\"count\":42}}";
-        stubFor(WireMock.patch(urlPathEqualTo(url))
+        stubFor(WireMock.patch(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.patch("test", requestBody, "id=1", new ServiceOptions());
+        Response response = service.patch(path, requestBody, "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(patchRequestedFor(urlPathEqualTo(url))
+        verify(patchRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
     @Test
     public void testPatchNullQueryAndOptions() throws IOException {
         String requestBody = "{\"$set\":{\"count\":42}}";
-        stubFor(WireMock.patch(urlPathEqualTo(url))
+        stubFor(WireMock.patch(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(requestBody)));
 
-        Response response = service.patch("test", requestBody, null, null);
+        Response response = service.patch(path, requestBody, null, null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), requestBody);
-        verify(patchRequestedFor(urlPathEqualTo(url)));
+        verify(patchRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testDelete() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
 
-        stubFor(WireMock.delete(urlPathEqualTo(url))
+        stubFor(WireMock.delete(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.delete("test", "", "id=1", new ServiceOptions());
+        Response response = service.delete(path, "", "id=1", new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(deleteRequestedFor(urlPathEqualTo(url))
+        verify(deleteRequestedFor(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 
@@ -232,35 +234,54 @@ public class ServiceTest {
     public void testDeleteNullQuery() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
 
-        stubFor(WireMock.delete(urlPathEqualTo(url))
+        stubFor(WireMock.delete(urlPathEqualTo(path))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.delete("test", "", null, new ServiceOptions());
+        Response response = service.delete(path, "", null, new ServiceOptions());
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(deleteRequestedFor(urlPathEqualTo(url)));
+        verify(deleteRequestedFor(urlPathEqualTo(path)));
     }
 
     @Test
     public void testDeleteNullOptions() throws IOException {
         String responseBody = "{\"result\":\"ok\"}";
 
-        stubFor(WireMock.delete(urlPathEqualTo(url))
+        stubFor(WireMock.delete(urlPathEqualTo(path))
                 .withQueryParam("id", WireMock.equalTo("1"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody(responseBody)));
 
-        Response response = service.delete("test", "", "id=1", null);
+        Response response = service.delete(path, "", "id=1", null);
 
         assertEquals(response.code(), 200);
         assertNotNull(response.body());
         assertEquals(response.body().string(), responseBody);
-        verify(deleteRequestedFor(urlPathEqualTo(url))
+        verify(deleteRequestedFor(urlPathEqualTo(path))
+                .withQueryParam("id", WireMock.equalTo("1")));
+    }
+
+    @Test
+    public void testSubRoutes() throws IOException {
+        String responseBody = "{\"result\":\"ok\"}";
+        String pathWithSubRoutes = "/sub/route/test";
+        stubFor(WireMock.get(urlPathEqualTo(pathWithSubRoutes))
+                .withQueryParam("id", WireMock.equalTo("1"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withBody(responseBody)));
+
+        Response response = service.get(pathWithSubRoutes, "id=1", new ServiceOptions());
+
+        assertEquals(response.code(), 200);
+        assertNotNull(response.body());
+        assertEquals(response.body().string(), responseBody);
+        verify(getRequestedFor(urlPathEqualTo(pathWithSubRoutes))
                 .withQueryParam("id", WireMock.equalTo("1")));
     }
 }

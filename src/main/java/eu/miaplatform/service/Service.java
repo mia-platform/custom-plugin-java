@@ -26,7 +26,7 @@ public class Service {
     private HttpUrl buildUrl(String path, String queryString, InitServiceOptions options) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
                .host(this.serviceName)
-               .addPathSegment(path);
+               .encodedPath(path);
         urlBuilder.port(options == null ? this.options.getPort() : options.getPort());
         urlBuilder.scheme(options == null ? this.options.getProtocol().toString() : options.getProtocol().toString());
         if (queryString != null) {
