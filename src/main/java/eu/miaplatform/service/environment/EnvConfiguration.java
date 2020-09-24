@@ -10,6 +10,7 @@ public class EnvConfiguration {
     private Map<String, String> envVariables;
     private final static String LIST_SEPARATOR = ",";
     private static EnvConfiguration envConfigurationInstance = null;
+    private static final String MISSING_ENV_VARIABLE_MESSAGE = "Required environment variable not found: %s.";
 
     private EnvConfiguration() {}
 
@@ -30,7 +31,7 @@ public class EnvConfiguration {
             }
 
             if (envVariable.isRequired()) {
-                throw new InvalidEnvConfigurationException("Required environment variable not found");
+                throw new InvalidEnvConfigurationException(String.format(MISSING_ENV_VARIABLE_MESSAGE, envVariable.getKey()));
             }
 
             if (envVariable.getDefaultValue() != null) {
@@ -58,7 +59,7 @@ public class EnvConfiguration {
     private static String getRequired(String envKey) throws InvalidEnvConfigurationException {
         String value = System.getenv(envKey);
         if (value == null || value.isEmpty()) {
-            throw new InvalidEnvConfigurationException("Required environment variable not found");
+            throw new InvalidEnvConfigurationException(String.format(MISSING_ENV_VARIABLE_MESSAGE, envKey));
         }
         return value;
     }
