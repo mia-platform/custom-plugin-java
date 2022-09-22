@@ -46,7 +46,7 @@
 
     <properties>
         <kotlin.version>1.3.10</kotlin.version>
-        <java.version>1.8</java.version>
+        <java.version>1.11</java.version>
         <dokka.version>1.4.0</dokka.version>
         <src.dir>src/main/java</src.dir>
         <test.src.dir>src/test/java</test.src.dir>
